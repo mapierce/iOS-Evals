@@ -1,6 +1,6 @@
 {
  "split": "published",
- "count": 66,
+ "count": 63,
  "families": [
   "accessibility",
   "colorscheme",
@@ -12,7 +12,6 @@
   "layout",
   "list",
   "navigation",
-  "observation",
   "onchange",
   "presentation",
   "scrolling",
@@ -25,7 +24,7 @@
   "textinput",
   "toolbar"
  ],
- "corpus_sha256": "5ae8565d83377861a5e367a1767f0e713c2ae509827a6e26b6ddaf515208f702",
+ "corpus_sha256": "a6759fce8987e7fa62919ecd19c97e96e55ee6f4c79454e54e1210e0ea14cab7",
  "prompts": [
   {
    "id": "navigation-01",
@@ -779,69 +778,6 @@
     "presentationBackground"
    ],
    "task_sha256": "add4d4ebb977797d82e8ea434eb402c88c2681c603931759b118a0b529e85fe9"
-  },
-  {
-   "id": "observation-01",
-   "split": "published",
-   "api_area": "observation",
-   "task": "Show a counter screen where the count lives in a separate model type and the view updates when it changes.",
-   "gate_symbols": [
-    "ObservedObject",
-    "StateObject",
-    "State",
-    "Bindable"
-   ],
-   "stale_markers": [
-    "ObservedObject",
-    "StateObject"
-   ],
-   "current_markers": [
-    "State",
-    "Bindable"
-   ],
-   "task_sha256": "9d51736d11e3f38d91aded92eb6ac27465347c4e84cc3054cf2a87c4e0a509ee"
-  },
-  {
-   "id": "observation-02",
-   "split": "published",
-   "api_area": "observation",
-   "task": "Show a profile form whose name and email fields edit a shared user model directly.",
-   "gate_symbols": [
-    "ObservedObject",
-    "StateObject",
-    "State",
-    "Bindable"
-   ],
-   "stale_markers": [
-    "ObservedObject",
-    "StateObject"
-   ],
-   "current_markers": [
-    "State",
-    "Bindable"
-   ],
-   "task_sha256": "9b326706390eab7e3c70f0d3bbcf6a5943eb8451565fddea2d7e1f9f4a1495dc"
-  },
-  {
-   "id": "observation-03",
-   "split": "published",
-   "api_area": "observation",
-   "task": "Show a shopping cart badge that updates whenever a cart model held elsewhere gains or loses items.",
-   "gate_symbols": [
-    "ObservedObject",
-    "StateObject",
-    "State",
-    "Bindable"
-   ],
-   "stale_markers": [
-    "ObservedObject",
-    "StateObject"
-   ],
-   "current_markers": [
-    "State",
-    "Bindable"
-   ],
-   "task_sha256": "3f563c4e53d9c13e3c31dae2b63c8ae1d25cd04a46d56cda586e03073f48bdc0"
   },
   {
    "id": "onchange-01",

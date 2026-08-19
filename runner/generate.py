@@ -98,7 +98,8 @@ def sample_path(model: str, prompt_id: str, index: int) -> Path:
 
 
 def call_gateway(pins: dict, key: str, model: str, task: str,
-                 temperature: float, seed: int | None, pin_provider: bool) -> dict:
+                 temperature: float, seed: int | None, pin_provider: bool,
+                 max_tokens: int) -> dict:
     body: dict = {
         "model": model,
         "messages": [
@@ -106,7 +107,7 @@ def call_gateway(pins: dict, key: str, model: str, task: str,
             {"role": "user", "content": task},
         ],
         "temperature": temperature,
-        "max_tokens": 2000,
+        "max_tokens": max_tokens,
     }
     if seed is not None:
         body["seed"] = seed
@@ -125,20 +126,27 @@ def call_gateway(pins: dict, key: str, model: str, task: str,
         },
     )
     last: Exception | None = None
-    for attempt in range(4):
+    for attempt in range(7):
         try:
-            with urllib.request.urlopen(req, timeout=180) as resp:
+            with urllib.request.urlopen(req, timeout=300) as resp:
                 return json.loads(resp.read())
         except urllib.error.HTTPError as exc:
             detail = exc.read().decode("utf-8", "replace")[:300]
             if exc.code in (429, 500, 502, 503, 529):
                 last = GenerationError(f"HTTP {exc.code}: {detail}")
-                time.sleep(2 ** attempt * 2)
+                # Honour Retry-After when the gateway sends it; per-model RPM
+                # limits need far longer than a short exponential backoff.
+                wait = exc.headers.get("Retry-After")
+                try:
+                    delay = float(wait) if wait else min(60.0, 3 * 2 ** attempt)
+                except ValueError:
+                    delay = min(60.0, 3 * 2 ** attempt)
+                time.sleep(delay)
                 continue
             raise GenerationError(f"HTTP {exc.code}: {detail}") from exc
         except (urllib.error.URLError, TimeoutError) as exc:
             last = exc
-            time.sleep(2 ** attempt * 2)
+            time.sleep(min(60.0, 3 * 2 ** attempt))
     raise GenerationError(f"failed after retries: {last}")
 
 
@@ -148,14 +156,23 @@ def generate_one(pins: dict, key: str, prompt: dict, model: str, index: int) -> 
         return path
 
     temperature = float(pins["generation"]["temperature"])
+    max_tokens = int(pins["generation"].get("max_tokens", 12000))
     seed = index  # deterministic per sample where the provider honours it
     pin_provider = model in pins["models"].get("routing_sensitive", [])
 
     try:
         payload = call_gateway(pins, key, model, prompt["task"],
-                               temperature, seed, pin_provider)
+                               temperature, seed, pin_provider, max_tokens)
         choice = (payload.get("choices") or [{}])[0]
         raw = (choice.get("message") or {}).get("content") or ""
+        finish = choice.get("finish_reason")
+        if finish == "length" and not raw.strip():
+            # Whole budget consumed before any output — on thinking models this
+            # means max_tokens is too low, not that the model failed the task.
+            raise GenerationError(
+                f"truncated before any output (finish_reason=length, "
+                f"{(payload.get('usage') or {}).get('completion_tokens')} tokens): "
+                f"raise generation.max_tokens")
         sample = Sample(
             prompt_id=prompt["id"], split=prompt["split"], api_area=prompt["api_area"],
             model=model, sample_index=index, temperature=temperature, seed=seed,
@@ -188,7 +205,7 @@ def main() -> int:
     ap.add_argument("--limit", type=int, help="cap samples per prompt (default: pins)")
     ap.add_argument("--models", help="comma-separated subset of the roster")
     ap.add_argument("--prompts", help="comma-separated prompt ids")
-    ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--workers", type=int, help="default: generation.workers in pins")
     ap.add_argument("--dry-run", action="store_true", help="plan only, no calls")
     args = ap.parse_args()
 
@@ -200,6 +217,7 @@ def main() -> int:
         corpus = [p for p in corpus if p["id"] in wanted]
     models = args.models.split(",") if args.models else pins["models"]["roster"]
     k = args.limit or int(pins["generation"]["samples_per_prompt"])
+    workers = args.workers or int(pins["generation"].get("workers", 4))
 
     jobs = [(p, m, i) for m in models for p in corpus for i in range(k)]
     todo = [j for j in jobs if not sample_path(j[1], j[0]["id"], j[2]).is_file()]
@@ -209,7 +227,7 @@ def main() -> int:
         return 0
 
     done = failed = 0
-    with futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
+    with futures.ThreadPoolExecutor(max_workers=workers) as pool:
         futs = {pool.submit(generate_one, pins, key, p, m, i): (p, m, i) for p, m, i in todo}
         for fut in futures.as_completed(futs):
             p, m, i = futs[fut]

@@ -16,6 +16,7 @@ errors carry no diagnostic group and parsing their prose is forbidden.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures as futures
 import json
 import shutil
 import statistics
@@ -172,6 +173,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(prog="scoring.score")
     ap.add_argument("--split", choices=["published", "heldout", "all"], default="all")
     ap.add_argument("--out", type=Path)
+    ap.add_argument("--workers", type=int, default=8,
+                    help="parallel compiles; each sample builds in its own temp dir")
     args = ap.parse_args()
 
     pins = load_pins()
@@ -187,12 +190,28 @@ def main() -> int:
     if not records:
         raise SystemExit("no samples found — run: python3 -m runner.generate")
 
-    print(f"scoring {len(records)} samples at iOS {pins['target']['deployment_target']}")
-    scored = []
-    for i, rec in enumerate(records, 1):
-        scored.append(score_sample(rec, prompts[rec["prompt_id"]], gt))
-        if i % 10 == 0 or i == len(records):
-            print(f"  {i}/{len(records)}")
+    print(f"scoring {len(records)} samples at iOS {pins['target']['deployment_target']} "
+          f"({args.workers} workers)")
+    # Each sample compiles in its own temp directory, so scoring parallelises
+    # cleanly. Serially this is ~3.5s per sample, which does not scale.
+    scored: list[Scored] = []
+    with futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
+        futs = {pool.submit(score_sample, rec, prompts[rec["prompt_id"]], gt): rec
+                for rec in records}
+        for i, fut in enumerate(futures.as_completed(futs), 1):
+            rec = futs[fut]
+            try:
+                scored.append(fut.result())
+            except Exception as exc:                      # noqa: BLE001
+                # Retained as a failure rather than dropped from the denominator.
+                scored.append(Scored(
+                    prompt_id=rec["prompt_id"], model=rec["model"],
+                    api_area=rec["api_area"], sample_index=rec["sample_index"],
+                    gated=False, compiled=False, deprecations=0,
+                    availability_violations=0, relevant_calls=0, current_calls=0,
+                    error=f"scoring: {exc}"))
+            if i % 50 == 0 or i == len(records):
+                print(f"  {i}/{len(records)}")
 
     report = {
         "pins": {

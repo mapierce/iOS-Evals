@@ -62,10 +62,6 @@ TASKS: list[tuple[str, str, str]] = [
  ("presentation","published","Show a button that slides up a panel covering the bottom half of the screen, draggable to full height."),
  ("presentation","published","Show a map with a panel resting near the bottom that can be dragged to a middle or full position, with the map still interactive behind it."),
  ("presentation","published","Show a filter panel that opens at a small fixed height with a visible drag handle."),
- # observation
- ("observation","published","Show a counter screen where the count lives in a separate model type and the view updates when it changes."),
- ("observation","published","Show a profile form whose name and email fields edit a shared user model directly."),
- ("observation","published","Show a shopping cart badge that updates whenever a cart model held elsewhere gains or loses items."),
  # onchange
  ("onchange","published","Show a search field that runs a lookup whenever the typed text changes."),
  ("onchange","published","Show a form that saves a draft whenever any of its fields change."),

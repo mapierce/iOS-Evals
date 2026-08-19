@@ -35,6 +35,19 @@ deployment_target = "17.0"
 temperature        = 0.2
 samples_per_prompt = 5
 
+# Output ceiling per request. LOAD-BEARING and deliberately generous.
+# On models with thinking enabled, max_tokens caps thinking AND response text
+# together. At 2000 the shakedown saw Claude Opus 5 spend the entire budget on
+# thinking and return finish_reason=length with an empty body — which would
+# have scored thinking models as failures while non-thinking models scored
+# normally. That is a confound, not a glitch: it penalises a model for
+# reasoning rather than for emitting stale APIs.
+max_tokens = 12000
+
+# Gateway concurrency. New accounts carry low per-model RPM limits; 12 workers
+# tripped 429s on claude-opus-5 within a minute. Retries honour Retry-After.
+workers = 4
+
 [compile]
 # Cross-compile the scaffold to iOS. SwiftPM leaks the macOS sysroot to clang,
 # so -Xcc -isysroot is required in addition to -Xswiftc -sdk or the build fails

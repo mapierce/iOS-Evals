@@ -50,6 +50,7 @@ def main() -> int:
     ap.add_argument("--limit", type=int, help="samples per prompt (default: pins)")
     ap.add_argument("--skip-generate", action="store_true",
                     help="score samples already on disk without calling any model")
+    ap.add_argument("--workers", type=int, default=8, help="parallel compiles during scoring")
     ap.add_argument("--dry-run", action="store_true", help="plan only")
     args = ap.parse_args()
 
@@ -91,7 +92,7 @@ def main() -> int:
     n += 1; step(n, total, "Scoring")
     report_path = REPO_ROOT / "build" / "report.json"
     cmd = [sys.executable, "-m", "scoring.score", "--split", args.split,
-           "--out", str(report_path)]
+           "--out", str(report_path), "--workers", str(args.workers)]
     run(cmd, why="Scoring failed.")
 
     n += 1; step(n, total, "Writing results")

@@ -128,5 +128,15 @@ Recorded at freeze time so they are not discovered as surprises later.
   declarations. Overload sets that share a base name are collapsed, so a symbol
   whose overloads differ in availability is attributed by base name. Overloads
   with genuinely divergent deprecation status are a known source of error.
+- **Property wrappers are invisible to the gate.** The parse-only AST records
+  `@State`, `@StateObject`, `@Published`, `@Bindable` and protocol conformances
+  as nameless attribute nodes, so wrapper usage is not counted as a relevant
+  call. The typechecked AST does resolve them, but its USRs interleave real
+  symbols with parameter labels, and counting labels would inflate numerator
+  and denominator together — compressing exactly the differences being
+  measured. The observation family was removed from the corpus for this reason
+  rather than scored on a gate that can never fire. Fixing this needs a real
+  demangler or a SwiftSyntax pass; until then, wrapper-centric API areas are
+  out of scope.
 - **One deployment target.** Results are valid only at the pinned target. A model
   scoring well at 17.0 is not thereby current at any other target.

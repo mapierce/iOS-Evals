@@ -86,11 +86,11 @@ FAMILIES: dict[str, dict[str, list[str]]] = {
         "current": ["presentationDetents", "presentationDragIndicator",
                     "presentationBackground"],
     },
-    "observation": {
-        "gate": ["ObservedObject", "StateObject", "State", "Bindable"],
-        "stale": ["ObservedObject", "StateObject"],
-        "current": ["State", "Bindable"],
-    },
+    # "observation" removed: the family is entirely property-wrapper based
+    # (@State, @StateObject, @Bindable), and the parse-only AST records those
+    # as nameless attribute nodes. Its gate could never fire, so every sample
+    # scored as ungated regardless of what the model wrote. See the known
+    # limitations in docs/metrics.md.
     "onchange": {
         "gate": ["onChange", "task", "onAppear", "State"],
         "stale": [],
