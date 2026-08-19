@@ -58,6 +58,7 @@ class Scored:
     availability_violations: int
     relevant_calls: int
     current_calls: int
+    truncated: bool = False
     error: str | None = None
 
 
@@ -136,7 +137,8 @@ def score_sample(rec: dict, prompt: dict, gt: GroundTruth) -> Scored:
 
     return Scored(**base, gated=gated, compiled=result.ok,
                   deprecations=deprecations, availability_violations=len(violations),
-                  relevant_calls=len(relevant), current_calls=len(current))
+                  relevant_calls=len(relevant), current_calls=len(current),
+                  truncated=bool(rec.get("truncated")))
 
 
 def aggregate(scored: list[Scored]) -> dict:
@@ -153,6 +155,9 @@ def aggregate(scored: list[Scored]) -> dict:
             "deprecations_per_sample": round(statistics.mean(r.deprecations for r in gated), 4) if gated else None,
             "availability_violations_per_sample": round(statistics.mean(r.availability_violations for r in gated), 4) if gated else None,
             "currency_score": round(total_cur / total_rel, 4) if total_rel else None,
+            # Share of samples cut off at max_tokens. A high value means the
+            # output ceiling, not the model, is shaping compile_rate.
+            "truncated_rate": round(sum(r.truncated for r in rows) / len(rows), 4) if rows else 0.0,
         }
 
     by_model: dict[str, list[Scored]] = defaultdict(list)

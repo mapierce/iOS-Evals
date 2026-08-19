@@ -42,11 +42,17 @@ samples_per_prompt = 5
 # have scored thinking models as failures while non-thinking models scored
 # normally. That is a confound, not a glitch: it penalises a model for
 # reasoning rather than for emitting stale APIs.
-max_tokens = 12000
+max_tokens = 16000
 
 # Gateway concurrency. New accounts carry low per-model RPM limits; 12 workers
 # tripped 429s on claude-opus-5 within a minute. Retries honour Retry-After.
 workers = 4
+
+# Raised from 12000 after a shakedown found kimi-k3 hitting the ceiling exactly
+# and returning PARTIAL Swift — which compiles as a failure and would have been
+# charged to the model rather than to the harness. Samples that stop on
+# finish_reason=length are now flagged `truncated` and reported, so a run can
+# never silently attribute our ceiling to a model's currency.
 
 [compile]
 # Cross-compile the scaffold to iOS. SwiftPM leaks the macOS sysroot to clang,

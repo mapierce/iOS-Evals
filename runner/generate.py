@@ -69,6 +69,9 @@ class Sample:
     finish_reason: str | None
     usage: dict
     generated_at: str
+    # Output stopped at max_tokens. Partial Swift will not compile, so this
+    # must be visible in results rather than charged to the model as staleness.
+    truncated: bool = False
     error: str | None = None
 
 
@@ -182,6 +185,7 @@ def generate_one(pins: dict, key: str, prompt: dict, model: str, index: int) -> 
             finish_reason=choice.get("finish_reason"),
             usage=payload.get("usage") or {},
             generated_at=datetime.now(timezone.utc).isoformat(),
+            truncated=(finish == "length"),
         )
     except GenerationError as exc:
         # Retained, not discarded. A model that cannot produce output scores as

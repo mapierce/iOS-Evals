@@ -66,8 +66,8 @@ def render(report: dict, prompt_count: int) -> str:
 
     L.append("## Per model")
     L.append("")
-    L.append("| Model | Gated | Compiles | Deprecations/sample | Availability/sample | Currency |")
-    L.append("|---|---:|---:|---:|---:|---:|")
+    L.append("| Model | Gated | Compiles | Deprecations/sample | Availability/sample | Currency | Truncated |")
+    L.append("|---|---:|---:|---:|---:|---:|---:|")
     rows = sorted(report["models"].items(),
                   key=lambda kv: (kv[1]["currency_score"] is None,
                                   -(kv[1]["currency_score"] or 0)))
@@ -75,7 +75,7 @@ def render(report: dict, prompt_count: int) -> str:
         L.append(
             f"| `{model}` | {b['gated_rate']:.2f} | {fmt(b['compile_rate'])} | "
             f"{fmt(b['deprecations_per_sample'])} | {fmt(b['availability_violations_per_sample'])} | "
-            f"{fmt(b['currency_score'], '{:.3f}')} |"
+            f"{fmt(b['currency_score'], '{:.3f}')} | {b.get('truncated_rate', 0):.2f} |"
         )
     L.append("")
 
@@ -107,6 +107,10 @@ def render(report: dict, prompt_count: int) -> str:
              "any result was viewed. Ground truth is parsed from the pinned SDK on disk at "
              "run time and is never hand-maintained. Samples that fail to generate or fail "
              "to compile are retained as failures, never dropped from the denominator.")
+    L.append("")
+    L.append("The truncated column is the share of samples that stopped at the output "
+             "ceiling. Truncated Swift does not compile, so a high value means the "
+             "ceiling rather than the model is shaping that row's compile rate.")
     L.append("")
     L.append("Deprecations are counted from the compiler's `DeprecatedDeclaration` "
              "diagnostic group, read from serialized `.dia` output rather than parsed from "

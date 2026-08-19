@@ -188,6 +188,7 @@ def collect(args) -> int:
                 provider=payload.get("provider"), finish_reason=finish,
                 usage=payload.get("usage") or {},
                 generated_at=datetime.now(timezone.utc).isoformat(),
+                truncated=(finish == "length"),
                 error=json.dumps(err)[:300] if err else None,
             )
             path.parent.mkdir(parents=True, exist_ok=True)
