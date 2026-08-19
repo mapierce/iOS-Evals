@@ -1,78 +1,186 @@
 {
  "split": "published",
- "count": 10,
- "corpus_sha256": "99ef30e40f9afd9deab368f166f490a03e0457f2562c4e0316c979537ee500ed",
+ "count": 66,
+ "families": [
+  "accessibility",
+  "colorscheme",
+  "dynamictype",
+  "focus",
+  "gestures",
+  "glass",
+  "gradient",
+  "layout",
+  "list",
+  "navigation",
+  "observation",
+  "onchange",
+  "presentation",
+  "scrolling",
+  "search",
+  "share",
+  "statusbar",
+  "styling",
+  "symbols",
+  "tabs",
+  "textinput",
+  "toolbar"
+ ],
+ "corpus_sha256": "5ae8565d83377861a5e367a1767f0e713c2ae509827a6e26b6ddaf515208f702",
  "prompts": [
   {
-   "id": "nav-001",
+   "id": "navigation-01",
    "split": "published",
    "api_area": "navigation",
-   "task": "Write a SwiftUI view for an iOS app showing a list of recipe names. Tapping a recipe opens a detail screen showing that recipe's name and ingredients.",
+   "task": "Show a list of recipe names. Tapping one opens a detail screen with that recipe's ingredients.",
    "gate_symbols": [
     "NavigationView",
     "NavigationStack",
     "NavigationLink",
     "navigationDestination",
-    "NavigationSplitView"
+    "NavigationSplitView",
+    "NavigationPath",
+    "navigationBarTitle",
+    "navigationTitle"
    ],
    "stale_markers": [
-    "NavigationView"
+    "NavigationView",
+    "navigationBarTitle"
    ],
    "current_markers": [
     "NavigationStack",
-    "navigationDestination"
+    "navigationDestination",
+    "navigationTitle",
+    "NavigationSplitView",
+    "NavigationPath"
    ],
-   "task_sha256": "db057ce257f4f872fdeb676e9b291b5e095709ebdb7943da70c28f7837720917"
+   "task_sha256": "13ee2a4400d03374aabcb78e67e4d1b51341e389e140f5e4f29daec1df388947"
   },
   {
-   "id": "nav-002",
+   "id": "navigation-02",
    "split": "published",
    "api_area": "navigation",
-   "task": "Write a SwiftUI screen with the heading 'Inbox' shown in the navigation bar, and a compose button in the top-right of that bar.",
+   "task": "Show a screen titled 'Inbox' in the navigation bar, with a compose button at its top right.",
    "gate_symbols": [
-    "navigationBarTitle",
-    "navigationTitle",
-    "toolbar",
-    "ToolbarItem",
     "NavigationView",
-    "NavigationStack"
+    "NavigationStack",
+    "NavigationLink",
+    "navigationDestination",
+    "NavigationSplitView",
+    "NavigationPath",
+    "navigationBarTitle",
+    "navigationTitle"
    ],
    "stale_markers": [
-    "navigationBarTitle",
-    "NavigationView"
+    "NavigationView",
+    "navigationBarTitle"
    ],
    "current_markers": [
+    "NavigationStack",
+    "navigationDestination",
     "navigationTitle",
-    "ToolbarItem",
-    "NavigationStack"
+    "NavigationSplitView",
+    "NavigationPath"
    ],
-   "task_sha256": "bfa1d0d5b60709a0405ddc85add310e0f88ef622c372482335aeed26bce89d9d"
+   "task_sha256": "5ba20fbf8854b50f6411a2346cd22ac94319e816cf505b29bb5a1230d91f36cc"
   },
   {
-   "id": "style-001",
+   "id": "navigation-03",
+   "split": "published",
+   "api_area": "navigation",
+   "task": "Show a settings screen where picking a category in a sidebar reveals that category's options beside it on iPad.",
+   "gate_symbols": [
+    "NavigationView",
+    "NavigationStack",
+    "NavigationLink",
+    "navigationDestination",
+    "NavigationSplitView",
+    "NavigationPath",
+    "navigationBarTitle",
+    "navigationTitle"
+   ],
+   "stale_markers": [
+    "NavigationView",
+    "navigationBarTitle"
+   ],
+   "current_markers": [
+    "NavigationStack",
+    "navigationDestination",
+    "navigationTitle",
+    "NavigationSplitView",
+    "NavigationPath"
+   ],
+   "task_sha256": "6afd6147255268b30c31e87987f77a003882e9053e9928bc1b31cdfb1df507b0"
+  },
+  {
+   "id": "styling-01",
    "split": "published",
    "api_area": "styling",
-   "task": "Write a SwiftUI view showing a temperature reading where the number is tinted red when it is above 30 degrees and blue otherwise.",
+   "task": "Show a temperature reading tinted red above 30 degrees and blue otherwise.",
    "gate_symbols": [
     "foregroundColor",
-    "foregroundStyle"
+    "foregroundStyle",
+    "background",
+    "backgroundStyle"
    ],
    "stale_markers": [
     "foregroundColor"
    ],
    "current_markers": [
-    "foregroundStyle"
+    "foregroundStyle",
+    "backgroundStyle"
    ],
-   "task_sha256": "363aeac19a74f495ae600afdd5c8898fe612a49ba2f1307b1dac652a2725f4f8"
+   "task_sha256": "f343ed4f30aaddd05118de93ff56ec32fe324d16b1a8f7ebd06de7400af59c92"
   },
   {
-   "id": "a11y-001",
+   "id": "styling-02",
+   "split": "published",
+   "api_area": "styling",
+   "task": "Show a row of status pills where each pill's text colour reflects its state: green for done, amber for pending, grey for archived.",
+   "gate_symbols": [
+    "foregroundColor",
+    "foregroundStyle",
+    "background",
+    "backgroundStyle"
+   ],
+   "stale_markers": [
+    "foregroundColor"
+   ],
+   "current_markers": [
+    "foregroundStyle",
+    "backgroundStyle"
+   ],
+   "task_sha256": "482aba0a5684dd77e08f6ba6e3520535dced5fa29ddf837da8fd71d1a2437d9a"
+  },
+  {
+   "id": "styling-03",
+   "split": "published",
+   "api_area": "styling",
+   "task": "Show a heading in the app's accent colour above body text in secondary grey.",
+   "gate_symbols": [
+    "foregroundColor",
+    "foregroundStyle",
+    "background",
+    "backgroundStyle"
+   ],
+   "stale_markers": [
+    "foregroundColor"
+   ],
+   "current_markers": [
+    "foregroundStyle",
+    "backgroundStyle"
+   ],
+   "task_sha256": "f615edc197f39ab5fb8380d73aee0cdcfda592314bc56f6c6b370f769a538c5f"
+  },
+  {
+   "id": "accessibility-01",
    "split": "published",
    "api_area": "accessibility",
-   "task": "Write a SwiftUI toolbar row of three icon-only buttons \u2014 share, favourite, delete \u2014 that a VoiceOver user can identify correctly.",
+   "task": "Show a toolbar row of three icon-only buttons \u2014 share, favourite, delete \u2014 that a VoiceOver user can tell apart.",
    "gate_symbols": [
     "accessibility",
     "accessibilityLabel",
+    "accessibilityValue",
+    "accessibilityHidden",
     "accessibilityAddTraits"
    ],
    "stale_markers": [
@@ -80,54 +188,603 @@
    ],
    "current_markers": [
     "accessibilityLabel",
+    "accessibilityValue",
+    "accessibilityHidden",
     "accessibilityAddTraits"
    ],
-   "task_sha256": "5bbb0934cba0c81440bdcb1ea02bab25c8ad47e08dacc45450d836ae963c98ed"
+   "task_sha256": "5a86d0e189051859f1a38ea999ffd124381b6417cbe5ce44114825a8ce6a7f38"
   },
   {
-   "id": "toolbar-001",
+   "id": "accessibility-02",
    "split": "published",
-   "api_area": "toolbar",
-   "task": "Write a SwiftUI screen whose navigation bar has a solid dark background with light text, rather than the system default.",
+   "api_area": "accessibility",
+   "task": "Show a volume slider that tells VoiceOver users its current percentage as they adjust it.",
    "gate_symbols": [
-    "toolbar",
-    "toolbarBackground",
-    "toolbarColorScheme",
-    "ToolbarItem"
+    "accessibility",
+    "accessibilityLabel",
+    "accessibilityValue",
+    "accessibilityHidden",
+    "accessibilityAddTraits"
    ],
    "stale_markers": [
+    "accessibility"
+   ],
+   "current_markers": [
+    "accessibilityLabel",
+    "accessibilityValue",
+    "accessibilityHidden",
+    "accessibilityAddTraits"
+   ],
+   "task_sha256": "c824afea417df3a47b7dcf0e6ba45b37d11b0469da847a8885be217ab9a633ba"
+  },
+  {
+   "id": "accessibility-03",
+   "split": "published",
+   "api_area": "accessibility",
+   "task": "Show a photo with a caption, where a screen reader describes the photo and skips the decorative divider above the caption.",
+   "gate_symbols": [
+    "accessibility",
+    "accessibilityLabel",
+    "accessibilityValue",
+    "accessibilityHidden",
+    "accessibilityAddTraits"
+   ],
+   "stale_markers": [
+    "accessibility"
+   ],
+   "current_markers": [
+    "accessibilityLabel",
+    "accessibilityValue",
+    "accessibilityHidden",
+    "accessibilityAddTraits"
+   ],
+   "task_sha256": "37bc97fae9186aed4029e012976132065722282d0cfd3ccb5aba03219508bb47"
+  },
+  {
+   "id": "toolbar-01",
+   "split": "published",
+   "api_area": "toolbar",
+   "task": "Show a screen whose navigation bar has a solid dark background with light text instead of the system default.",
+   "gate_symbols": [
+    "toolbar",
+    "ToolbarItem",
+    "ToolbarItemGroup",
+    "toolbarBackground",
+    "toolbarColorScheme"
+   ],
+   "stale_markers": [
+    "toolbar",
     "toolbarBackground"
    ],
    "current_markers": [
-    "toolbarColorScheme",
-    "ToolbarItem"
+    "ToolbarItem",
+    "ToolbarItemGroup",
+    "toolbarColorScheme"
    ],
-   "task_sha256": "fcdfed5974db545c9a42359a483dd8331816ef57eecc46f65242336bbb12b8de"
+   "task_sha256": "4176a4367107e733809bc47e84d5b8f7842d23a18161ad270c19a7801bdc086b"
   },
   {
-   "id": "scroll-001",
+   "id": "toolbar-02",
+   "split": "published",
+   "api_area": "toolbar",
+   "task": "Show an editor screen with undo and redo buttons on the left of the navigation bar and a save button on the right.",
+   "gate_symbols": [
+    "toolbar",
+    "ToolbarItem",
+    "ToolbarItemGroup",
+    "toolbarBackground",
+    "toolbarColorScheme"
+   ],
+   "stale_markers": [
+    "toolbar",
+    "toolbarBackground"
+   ],
+   "current_markers": [
+    "ToolbarItem",
+    "ToolbarItemGroup",
+    "toolbarColorScheme"
+   ],
+   "task_sha256": "34c0fa7cb48b601ced661edfd033900de157dacf47f95fbba67f436426397ced"
+  },
+  {
+   "id": "toolbar-03",
+   "split": "published",
+   "api_area": "toolbar",
+   "task": "Show a reading screen where the navigation bar hides while scrolling down and returns when scrolling up.",
+   "gate_symbols": [
+    "toolbar",
+    "ToolbarItem",
+    "ToolbarItemGroup",
+    "toolbarBackground",
+    "toolbarColorScheme"
+   ],
+   "stale_markers": [
+    "toolbar",
+    "toolbarBackground"
+   ],
+   "current_markers": [
+    "ToolbarItem",
+    "ToolbarItemGroup",
+    "toolbarColorScheme"
+   ],
+   "task_sha256": "ffa245e38d5583c908006ff91092aec66318543e83f28635f71cedfe33eefe9d"
+  },
+  {
+   "id": "gestures-01",
+   "split": "published",
+   "api_area": "gestures",
+   "task": "Show an image the user can pinch to zoom in and out.",
+   "gate_symbols": [
+    "MagnificationGesture",
+    "MagnifyGesture",
+    "RotationGesture",
+    "RotateGesture",
+    "onLongPressGesture"
+   ],
+   "stale_markers": [
+    "MagnificationGesture",
+    "RotationGesture",
+    "onLongPressGesture"
+   ],
+   "current_markers": [
+    "MagnifyGesture",
+    "RotateGesture"
+   ],
+   "task_sha256": "18d5bcf0d98cdaa9ba7c56518dc317debbc17efdc00278d5caa02dce92e9cf20"
+  },
+  {
+   "id": "gestures-02",
+   "split": "published",
+   "api_area": "gestures",
+   "task": "Show a card the user can twist with two fingers to rotate it.",
+   "gate_symbols": [
+    "MagnificationGesture",
+    "MagnifyGesture",
+    "RotationGesture",
+    "RotateGesture",
+    "onLongPressGesture"
+   ],
+   "stale_markers": [
+    "MagnificationGesture",
+    "RotationGesture",
+    "onLongPressGesture"
+   ],
+   "current_markers": [
+    "MagnifyGesture",
+    "RotateGesture"
+   ],
+   "task_sha256": "d7826e13213aa5ea719f0a166ac03903fa39c419f7d76a05fc3415733f8c3da1"
+  },
+  {
+   "id": "gestures-03",
+   "split": "published",
+   "api_area": "gestures",
+   "task": "Show a colour swatch that opens an options menu when pressed and held for half a second.",
+   "gate_symbols": [
+    "MagnificationGesture",
+    "MagnifyGesture",
+    "RotationGesture",
+    "RotateGesture",
+    "onLongPressGesture"
+   ],
+   "stale_markers": [
+    "MagnificationGesture",
+    "RotationGesture",
+    "onLongPressGesture"
+   ],
+   "current_markers": [
+    "MagnifyGesture",
+    "RotateGesture"
+   ],
+   "task_sha256": "7997f8f08f43cbf7b682e67a83e4b96de2274333a6e84d6819267a42e704165d"
+  },
+  {
+   "id": "colorscheme-01",
+   "split": "published",
+   "api_area": "colorscheme",
+   "task": "Show an onboarding screen that always renders in dark appearance regardless of the device setting.",
+   "gate_symbols": [
+    "colorScheme",
+    "preferredColorScheme"
+   ],
+   "stale_markers": [
+    "colorScheme"
+   ],
+   "current_markers": [
+    "preferredColorScheme"
+   ],
+   "task_sha256": "ca9c8a7e9e9d6811baeb21ef6880aa79e583ef6f9d9e17ab6855d5503802fe36"
+  },
+  {
+   "id": "colorscheme-02",
+   "split": "published",
+   "api_area": "colorscheme",
+   "task": "Show a settings toggle that switches the app between light and dark appearance immediately.",
+   "gate_symbols": [
+    "colorScheme",
+    "preferredColorScheme"
+   ],
+   "stale_markers": [
+    "colorScheme"
+   ],
+   "current_markers": [
+    "preferredColorScheme"
+   ],
+   "task_sha256": "8efbab7205146a61283a75b8d16720076c3a7e80111b04c9ffe379cf2acff584"
+  },
+  {
+   "id": "colorscheme-03",
+   "split": "published",
+   "api_area": "colorscheme",
+   "task": "Show a photo review screen forced to light appearance so image colours read accurately.",
+   "gate_symbols": [
+    "colorScheme",
+    "preferredColorScheme"
+   ],
+   "stale_markers": [
+    "colorScheme"
+   ],
+   "current_markers": [
+    "preferredColorScheme"
+   ],
+   "task_sha256": "d0bd6c8719fad4c856e056a8b379a233cd2f0acd228e60287007c3e6452b76f1"
+  },
+  {
+   "id": "textinput-01",
+   "split": "published",
+   "api_area": "textinput",
+   "task": "Show a username field that never autocorrects what the user types.",
+   "gate_symbols": [
+    "disableAutocorrection",
+    "autocorrectionDisabled",
+    "textInputAutocapitalization"
+   ],
+   "stale_markers": [
+    "disableAutocorrection"
+   ],
+   "current_markers": [
+    "autocorrectionDisabled",
+    "textInputAutocapitalization"
+   ],
+   "task_sha256": "c8858c317c7aa7b42ae8ff7dabf65c78b8aad49f8e0943a0c77b28dee1f5a3d7"
+  },
+  {
+   "id": "textinput-02",
+   "split": "published",
+   "api_area": "textinput",
+   "task": "Show an email field with autocorrect off and no automatic capitalisation of the first letter.",
+   "gate_symbols": [
+    "disableAutocorrection",
+    "autocorrectionDisabled",
+    "textInputAutocapitalization"
+   ],
+   "stale_markers": [
+    "disableAutocorrection"
+   ],
+   "current_markers": [
+    "autocorrectionDisabled",
+    "textInputAutocapitalization"
+   ],
+   "task_sha256": "935fc41d38a111b4a6a04b3be1fb525daf9249a5c3ead3e7abd81731c0ae9973"
+  },
+  {
+   "id": "textinput-03",
+   "split": "published",
+   "api_area": "textinput",
+   "task": "Show a code-entry field that takes raw text with no autocorrection or capitalisation.",
+   "gate_symbols": [
+    "disableAutocorrection",
+    "autocorrectionDisabled",
+    "textInputAutocapitalization"
+   ],
+   "stale_markers": [
+    "disableAutocorrection"
+   ],
+   "current_markers": [
+    "autocorrectionDisabled",
+    "textInputAutocapitalization"
+   ],
+   "task_sha256": "f442383a706cdf342e56de782a56c7056356f958fdcce28a36e96dac7c666b8f"
+  },
+  {
+   "id": "dynamictype-01",
+   "split": "published",
+   "api_area": "dynamictype",
+   "task": "Show a card that switches from a side-by-side layout to a stacked one when the user has enlarged their text size.",
+   "gate_symbols": [
+    "sizeCategory",
+    "ContentSizeCategory",
+    "dynamicTypeSize",
+    "DynamicTypeSize"
+   ],
+   "stale_markers": [
+    "sizeCategory",
+    "ContentSizeCategory"
+   ],
+   "current_markers": [
+    "dynamicTypeSize",
+    "DynamicTypeSize"
+   ],
+   "task_sha256": "0364a5229c92015737b54e8e1fe3e157241d88345d9947ec064e13a3edcb483e"
+  },
+  {
+   "id": "dynamictype-02",
+   "split": "published",
+   "api_area": "dynamictype",
+   "task": "Show a list row that hides its subtitle at the largest accessibility text sizes.",
+   "gate_symbols": [
+    "sizeCategory",
+    "ContentSizeCategory",
+    "dynamicTypeSize",
+    "DynamicTypeSize"
+   ],
+   "stale_markers": [
+    "sizeCategory",
+    "ContentSizeCategory"
+   ],
+   "current_markers": [
+    "dynamicTypeSize",
+    "DynamicTypeSize"
+   ],
+   "task_sha256": "027ba41894abb79fe4e39cf0299b11a92fdbfcf5d08bd0817e8e946bf5f42fb1"
+  },
+  {
+   "id": "dynamictype-03",
+   "split": "published",
+   "api_area": "dynamictype",
+   "task": "Show a button whose icon and label stack vertically once the user's text size passes the accessibility sizes.",
+   "gate_symbols": [
+    "sizeCategory",
+    "ContentSizeCategory",
+    "dynamicTypeSize",
+    "DynamicTypeSize"
+   ],
+   "stale_markers": [
+    "sizeCategory",
+    "ContentSizeCategory"
+   ],
+   "current_markers": [
+    "dynamicTypeSize",
+    "DynamicTypeSize"
+   ],
+   "task_sha256": "f7796c38d5c3515c1c0ae68273b519c1e001337216e874507c45b207b564964f"
+  },
+  {
+   "id": "statusbar-01",
+   "split": "published",
+   "api_area": "statusbar",
+   "task": "Show a full-screen video player with the status bar hidden.",
+   "gate_symbols": [
+    "statusBar",
+    "statusBarHidden"
+   ],
+   "stale_markers": [
+    "statusBar"
+   ],
+   "current_markers": [
+    "statusBarHidden"
+   ],
+   "task_sha256": "152b1b2afe32139302fd0a887680438a9547a0ef8cf16497e170c3f5ce58fcd4"
+  },
+  {
+   "id": "statusbar-02",
+   "split": "published",
+   "api_area": "statusbar",
+   "task": "Show an image gallery where the status bar hides once the user enters full-screen viewing.",
+   "gate_symbols": [
+    "statusBar",
+    "statusBarHidden"
+   ],
+   "stale_markers": [
+    "statusBar"
+   ],
+   "current_markers": [
+    "statusBarHidden"
+   ],
+   "task_sha256": "9b07fe5bc301a9e1e53512a0dc56120a20777c5e6a46c73cfdaff1604bdfdc5f"
+  },
+  {
+   "id": "statusbar-03",
+   "split": "published",
+   "api_area": "statusbar",
+   "task": "Show a splash screen with no status bar visible.",
+   "gate_symbols": [
+    "statusBar",
+    "statusBarHidden"
+   ],
+   "stale_markers": [
+    "statusBar"
+   ],
+   "current_markers": [
+    "statusBarHidden"
+   ],
+   "task_sha256": "0cf1bac107d3505bf79c56b40372cdb7e0e12115c34b4b606e4adef802fced5a"
+  },
+  {
+   "id": "search-01",
+   "split": "published",
+   "api_area": "search",
+   "task": "Show a searchable list of contacts filtered as the user types.",
+   "gate_symbols": [
+    "searchable",
+    "refreshable"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "searchable",
+    "refreshable"
+   ],
+   "task_sha256": "02280eb5103bc107958f0c87574859825eef9db6f128e9bdf3594faa7dabcecf"
+  },
+  {
+   "id": "search-02",
+   "split": "published",
+   "api_area": "search",
+   "task": "Show a list of orders that can be searched and also pulled down to refresh.",
+   "gate_symbols": [
+    "searchable",
+    "refreshable"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "searchable",
+    "refreshable"
+   ],
+   "task_sha256": "fab6d419dce40936bbb944ed8ba3a3c35cd0a4cc2bc4f4ecf82e9f8763fab091"
+  },
+  {
+   "id": "search-03",
+   "split": "published",
+   "api_area": "search",
+   "task": "Show a searchable list of cities that offers completions beneath the search field as the user types.",
+   "gate_symbols": [
+    "searchable",
+    "refreshable"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "searchable",
+    "refreshable"
+   ],
+   "task_sha256": "8dac91a39c036be98a8feeaf0a163a0c1f9e60e42bd462eb5e484961b6c4b7d5"
+  },
+  {
+   "id": "scrolling-01",
    "split": "published",
    "api_area": "scrolling",
-   "task": "Write a SwiftUI horizontal carousel of cards that comes to rest with one card centred, rather than stopping between cards.",
+   "task": "Show a horizontal carousel of cards that comes to rest with one card centred rather than stopping between cards.",
    "gate_symbols": [
     "ScrollView",
     "scrollTargetBehavior",
     "scrollTargetLayout",
     "scrollPosition",
-    "LazyHStack"
+    "contentMargins",
+    "safeAreaPadding",
+    "defaultScrollAnchor",
+    "scrollClipDisabled",
+    "scrollIndicators"
    ],
    "stale_markers": [],
    "current_markers": [
     "scrollTargetBehavior",
-    "scrollTargetLayout"
+    "scrollTargetLayout",
+    "scrollIndicators"
    ],
-   "task_sha256": "12040ae64026bf28b991970866e15ddc885d3891c7a4627d537f2d2875dee4e5"
+   "task_sha256": "0faf36ef612048e2543023d211c4d3f04f3e7345de9fd569a0ceb59d1a4175ab"
   },
   {
-   "id": "obs-001",
+   "id": "scrolling-02",
+   "split": "published",
+   "api_area": "scrolling",
+   "task": "Show a vertical feed with extra breathing room at the top and bottom of the scrollable content, without moving the scroll indicators.",
+   "gate_symbols": [
+    "ScrollView",
+    "scrollTargetBehavior",
+    "scrollTargetLayout",
+    "scrollPosition",
+    "contentMargins",
+    "safeAreaPadding",
+    "defaultScrollAnchor",
+    "scrollClipDisabled",
+    "scrollIndicators"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "scrollTargetBehavior",
+    "scrollTargetLayout",
+    "scrollIndicators"
+   ],
+   "task_sha256": "15db6ba4c9f45ecb075e9ce8ac9e77a48b198af0e395bd7ded4c31685f82f2ff"
+  },
+  {
+   "id": "scrolling-03",
+   "split": "published",
+   "api_area": "scrolling",
+   "task": "Show a chat transcript that opens scrolled to the most recent message at the bottom.",
+   "gate_symbols": [
+    "ScrollView",
+    "scrollTargetBehavior",
+    "scrollTargetLayout",
+    "scrollPosition",
+    "contentMargins",
+    "safeAreaPadding",
+    "defaultScrollAnchor",
+    "scrollClipDisabled",
+    "scrollIndicators"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "scrollTargetBehavior",
+    "scrollTargetLayout",
+    "scrollIndicators"
+   ],
+   "task_sha256": "15be6f8d3732f14d622e1692db2f4a78e85ac85fc354268e8fcf09ae80367664"
+  },
+  {
+   "id": "presentation-01",
+   "split": "published",
+   "api_area": "presentation",
+   "task": "Show a button that slides up a panel covering the bottom half of the screen, draggable to full height.",
+   "gate_symbols": [
+    "sheet",
+    "presentationDetents",
+    "presentationDragIndicator",
+    "presentationBackground",
+    "presentationSizing"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "presentationDetents",
+    "presentationDragIndicator",
+    "presentationBackground"
+   ],
+   "task_sha256": "f117c8274aaccc23167d4a7ca5be1fe2753f10fee13e10b39750b6d4d216c7a3"
+  },
+  {
+   "id": "presentation-02",
+   "split": "published",
+   "api_area": "presentation",
+   "task": "Show a map with a panel resting near the bottom that can be dragged to a middle or full position, with the map still interactive behind it.",
+   "gate_symbols": [
+    "sheet",
+    "presentationDetents",
+    "presentationDragIndicator",
+    "presentationBackground",
+    "presentationSizing"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "presentationDetents",
+    "presentationDragIndicator",
+    "presentationBackground"
+   ],
+   "task_sha256": "0196fb2db84452131eb4f6131ec722ae2047d1999337f76f514cf87a522fa179"
+  },
+  {
+   "id": "presentation-03",
+   "split": "published",
+   "api_area": "presentation",
+   "task": "Show a filter panel that opens at a small fixed height with a visible drag handle.",
+   "gate_symbols": [
+    "sheet",
+    "presentationDetents",
+    "presentationDragIndicator",
+    "presentationBackground",
+    "presentationSizing"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "presentationDetents",
+    "presentationDragIndicator",
+    "presentationBackground"
+   ],
+   "task_sha256": "add4d4ebb977797d82e8ea434eb402c88c2681c603931759b118a0b529e85fe9"
+  },
+  {
+   "id": "observation-01",
    "split": "published",
    "api_area": "observation",
-   "task": "Write a SwiftUI counter screen where the count lives in a separate model type, and the view updates whenever the model changes.",
+   "task": "Show a counter screen where the count lives in a separate model type and the view updates when it changes.",
    "gate_symbols": [
     "ObservedObject",
     "StateObject",
@@ -135,36 +792,116 @@
     "Bindable"
    ],
    "stale_markers": [
-    "ObservedObject"
+    "ObservedObject",
+    "StateObject"
    ],
    "current_markers": [
     "State",
     "Bindable"
    ],
-   "task_sha256": "365549e5dbb45f9ad86ab8da99aee25666de998c372544137dac9dcad6802b1d"
+   "task_sha256": "9d51736d11e3f38d91aded92eb6ac27465347c4e84cc3054cf2a87c4e0a509ee"
   },
   {
-   "id": "sheet-001",
+   "id": "observation-02",
    "split": "published",
-   "api_area": "presentation",
-   "task": "Write a SwiftUI view with a button that slides up a panel covering the bottom half of the screen, which the user can drag to full height.",
+   "api_area": "observation",
+   "task": "Show a profile form whose name and email fields edit a shared user model directly.",
    "gate_symbols": [
-    "sheet",
-    "presentationDetents",
-    "presentationDragIndicator"
+    "ObservedObject",
+    "StateObject",
+    "State",
+    "Bindable"
+   ],
+   "stale_markers": [
+    "ObservedObject",
+    "StateObject"
+   ],
+   "current_markers": [
+    "State",
+    "Bindable"
+   ],
+   "task_sha256": "9b326706390eab7e3c70f0d3bbcf6a5943eb8451565fddea2d7e1f9f4a1495dc"
+  },
+  {
+   "id": "observation-03",
+   "split": "published",
+   "api_area": "observation",
+   "task": "Show a shopping cart badge that updates whenever a cart model held elsewhere gains or loses items.",
+   "gate_symbols": [
+    "ObservedObject",
+    "StateObject",
+    "State",
+    "Bindable"
+   ],
+   "stale_markers": [
+    "ObservedObject",
+    "StateObject"
+   ],
+   "current_markers": [
+    "State",
+    "Bindable"
+   ],
+   "task_sha256": "3f563c4e53d9c13e3c31dae2b63c8ae1d25cd04a46d56cda586e03073f48bdc0"
+  },
+  {
+   "id": "onchange-01",
+   "split": "published",
+   "api_area": "onchange",
+   "task": "Show a search field that runs a lookup whenever the typed text changes.",
+   "gate_symbols": [
+    "onChange",
+    "task",
+    "onAppear",
+    "State"
    ],
    "stale_markers": [],
    "current_markers": [
-    "presentationDetents",
-    "presentationDragIndicator"
+    "onChange",
+    "task"
    ],
-   "task_sha256": "ab88c4ba084bf195fa4a6b8351fd4a5cc8f7272bac18ad88de701217b395d8be"
+   "task_sha256": "0982fa163e4567edc0f3196ec2b38306beaa3f873e9cce4f4ed48162a9bc7ad6"
   },
   {
-   "id": "list-001",
+   "id": "onchange-02",
+   "split": "published",
+   "api_area": "onchange",
+   "task": "Show a form that saves a draft whenever any of its fields change.",
+   "gate_symbols": [
+    "onChange",
+    "task",
+    "onAppear",
+    "State"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "onChange",
+    "task"
+   ],
+   "task_sha256": "e48aa90983fd6175bea71a60d3bfdecf289b7ef911d0157fe8c443d21bbace4f"
+  },
+  {
+   "id": "onchange-03",
+   "split": "published",
+   "api_area": "onchange",
+   "task": "Show a slider that recalculates and displays a total whenever its value moves.",
+   "gate_symbols": [
+    "onChange",
+    "task",
+    "onAppear",
+    "State"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "onChange",
+    "task"
+   ],
+   "task_sha256": "0355e1fd79b04560e4c9f5488831feca81df480f58c1b24b6908d2519c29148d"
+  },
+  {
+   "id": "list-01",
    "split": "published",
    "api_area": "list",
-   "task": "Write a SwiftUI list of tasks grouped under 'Today' and 'Later', where swiping a row sideways reveals a delete action.",
+   "task": "Show a list of tasks grouped under 'Today' and 'Later', where swiping a row sideways reveals delete.",
    "gate_symbols": [
     "List",
     "ForEach",
@@ -175,26 +912,446 @@
    "stale_markers": [],
    "current_markers": [
     "swipeActions",
-    "Section"
+    "Section",
+    "listRowSeparator"
    ],
-   "task_sha256": "2036a48090458f03400691210552d7c955a35f8ef727378421ef27cb9735f613"
+   "task_sha256": "e228c9956f5b121b38d14c29e0d1e551ee0eba8c597fbbca11a007d81d20614a"
   },
   {
-   "id": "change-001",
+   "id": "list-02",
    "split": "published",
-   "api_area": "onchange",
-   "task": "Write a SwiftUI search field that runs a lookup whenever the text the user has typed changes.",
+   "api_area": "list",
+   "task": "Show a list of emails where swiping right marks as read and swiping left deletes.",
    "gate_symbols": [
-    "onChange",
-    "task",
-    "onAppear",
+    "List",
+    "ForEach",
+    "Section",
+    "swipeActions",
+    "listRowSeparator"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "swipeActions",
+    "Section",
+    "listRowSeparator"
+   ],
+   "task_sha256": "3cc29a3c8715f02dd6bb87e915dcece6903357e1f56d7f1e0239f8cc8491b9eb"
+  },
+  {
+   "id": "list-03",
+   "split": "published",
+   "api_area": "list",
+   "task": "Show a settings list of grouped sections with no separator lines between rows.",
+   "gate_symbols": [
+    "List",
+    "ForEach",
+    "Section",
+    "swipeActions",
+    "listRowSeparator"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "swipeActions",
+    "Section",
+    "listRowSeparator"
+   ],
+   "task_sha256": "b67dc4eeef2a252e4a7d366952b9c0f6e1f321c7cf0923c65c4718918da06249"
+  },
+  {
+   "id": "layout-01",
+   "split": "published",
+   "api_area": "layout",
+   "task": "Show a specification table of label-and-value pairs aligned in two neat columns.",
+   "gate_symbols": [
+    "Grid",
+    "GridRow",
+    "LabeledContent",
+    "GroupBox",
+    "Gauge"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "Grid",
+    "GridRow",
+    "LabeledContent",
+    "Gauge"
+   ],
+   "task_sha256": "6532952b7b923bf4cf2d4ceb8c16ffc9b6f5d649f427be60323b127fb1e393f0"
+  },
+  {
+   "id": "layout-02",
+   "split": "published",
+   "api_area": "layout",
+   "task": "Show a settings row with a title on the left and its current value right-aligned on the same line.",
+   "gate_symbols": [
+    "Grid",
+    "GridRow",
+    "LabeledContent",
+    "GroupBox",
+    "Gauge"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "Grid",
+    "GridRow",
+    "LabeledContent",
+    "Gauge"
+   ],
+   "task_sha256": "ea8921617f88eca3c2c918ac277d122c93fef659bedb7cacb8fe7bf11d8c8432"
+  },
+  {
+   "id": "layout-03",
+   "split": "published",
+   "api_area": "layout",
+   "task": "Show a fitness ring showing progress toward a daily step goal as a proportion of the target.",
+   "gate_symbols": [
+    "Grid",
+    "GridRow",
+    "LabeledContent",
+    "GroupBox",
+    "Gauge"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "Grid",
+    "GridRow",
+    "LabeledContent",
+    "Gauge"
+   ],
+   "task_sha256": "9664074b99b30364ac8b92aa244634cbcc2186b05ae8182d73dba61374611e04"
+  },
+  {
+   "id": "gradient-01",
+   "split": "published",
+   "api_area": "gradient",
+   "task": "Show a card whose surface fades from orange at the top to pink at the bottom with white title text over it.",
+   "gate_symbols": [
+    "MeshGradient",
+    "backgroundStyle",
+    "background",
+    "foregroundStyle",
+    "foregroundColor"
+   ],
+   "stale_markers": [
+    "foregroundColor"
+   ],
+   "current_markers": [
+    "MeshGradient",
+    "backgroundStyle",
+    "foregroundStyle"
+   ],
+   "task_sha256": "b67dedaca5b75ffebdfe69da4f4e0139be654df4c28126a05c9d6713e5168744"
+  },
+  {
+   "id": "gradient-02",
+   "split": "published",
+   "api_area": "gradient",
+   "task": "Show a header banner with a soft multi-colour wash behind the title, blending several colours across the area rather than a straight two-colour fade.",
+   "gate_symbols": [
+    "MeshGradient",
+    "backgroundStyle",
+    "background",
+    "foregroundStyle",
+    "foregroundColor"
+   ],
+   "stale_markers": [
+    "foregroundColor"
+   ],
+   "current_markers": [
+    "MeshGradient",
+    "backgroundStyle",
+    "foregroundStyle"
+   ],
+   "task_sha256": "8c4a876987a6883f31b5569527499638f047791f351bec4e34bffe68bb067aae"
+  },
+  {
+   "id": "gradient-03",
+   "split": "published",
+   "api_area": "gradient",
+   "task": "Show a button whose fill is a smooth colour blend rather than a flat colour.",
+   "gate_symbols": [
+    "MeshGradient",
+    "backgroundStyle",
+    "background",
+    "foregroundStyle",
+    "foregroundColor"
+   ],
+   "stale_markers": [
+    "foregroundColor"
+   ],
+   "current_markers": [
+    "MeshGradient",
+    "backgroundStyle",
+    "foregroundStyle"
+   ],
+   "task_sha256": "1ead85ab0106898094f98cbcabcbf1fcedb93ed50064591f1b785422bf91a478"
+  },
+  {
+   "id": "glass-01",
+   "split": "published",
+   "api_area": "glass",
+   "task": "Show a floating control bar over a photo that appears to be frosted translucent material picking up the image behind it.",
+   "gate_symbols": [
+    "glassEffect",
+    "GlassEffectContainer",
+    "ConcentricRectangle",
+    "background"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "glassEffect",
+    "GlassEffectContainer",
+    "ConcentricRectangle"
+   ],
+   "task_sha256": "491ba31bff7fa16af23808fcd5ccc8ed208f79c6e43aa78cc05804b296f12733"
+  },
+  {
+   "id": "glass-02",
+   "split": "published",
+   "api_area": "glass",
+   "task": "Show a set of round action buttons over a video that share one continuous translucent surface.",
+   "gate_symbols": [
+    "glassEffect",
+    "GlassEffectContainer",
+    "ConcentricRectangle",
+    "background"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "glassEffect",
+    "GlassEffectContainer",
+    "ConcentricRectangle"
+   ],
+   "task_sha256": "85b52dbeb559a06f8543b0b6f7cb4879653497a7296f4ff89287d1131daf111d"
+  },
+  {
+   "id": "glass-03",
+   "split": "published",
+   "api_area": "glass",
+   "task": "Show a rounded card whose corner curvature stays visually consistent with the rounded shape nested inside it.",
+   "gate_symbols": [
+    "glassEffect",
+    "GlassEffectContainer",
+    "ConcentricRectangle",
+    "background"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "glassEffect",
+    "GlassEffectContainer",
+    "ConcentricRectangle"
+   ],
+   "task_sha256": "0e6d16d76a4477a337d846d387fddc8e8906ece7f36860072f1985093f1e55dc"
+  },
+  {
+   "id": "symbols-01",
+   "split": "published",
+   "api_area": "symbols",
+   "task": "Show a bell icon that pulses when a new notification arrives.",
+   "gate_symbols": [
+    "symbolEffect",
+    "contentTransition",
+    "Image"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "symbolEffect",
+    "contentTransition"
+   ],
+   "task_sha256": "414594382a14af5fe34a7f97a3b6359c575204ab714fcbea657eb80d8854fdc8"
+  },
+  {
+   "id": "symbols-02",
+   "split": "published",
+   "api_area": "symbols",
+   "task": "Show a download icon that animates as it changes into a checkmark when the download finishes.",
+   "gate_symbols": [
+    "symbolEffect",
+    "contentTransition",
+    "Image"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "symbolEffect",
+    "contentTransition"
+   ],
+   "task_sha256": "fc120d258827d76da52246df97c66622d874b082fb0a77628e60425f4ae8239b"
+  },
+  {
+   "id": "symbols-03",
+   "split": "published",
+   "api_area": "symbols",
+   "task": "Show a wifi icon whose bars fill one at a time while connecting.",
+   "gate_symbols": [
+    "symbolEffect",
+    "contentTransition",
+    "Image"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "symbolEffect",
+    "contentTransition"
+   ],
+   "task_sha256": "9acfcab453bd8fb061408a05952e2c6ebb62e234b8811d12876367808aa09a99"
+  },
+  {
+   "id": "tabs-01",
+   "split": "published",
+   "api_area": "tabs",
+   "task": "Show a three-tab app with Home, Search and Profile tabs.",
+   "gate_symbols": [
+    "TabView",
+    "Tab",
+    "tabViewStyle"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "Tab",
+    "tabViewStyle"
+   ],
+   "task_sha256": "729929d8dd4c535b1038d4bdc4725fd183653f16de8e31cc5809def73722c22a"
+  },
+  {
+   "id": "tabs-02",
+   "split": "published",
+   "api_area": "tabs",
+   "task": "Show a tabbed app where the user can reorder and hide tabs to suit themselves.",
+   "gate_symbols": [
+    "TabView",
+    "Tab",
+    "tabViewStyle"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "Tab",
+    "tabViewStyle"
+   ],
+   "task_sha256": "84b6dc22a4ffe75613eb75cf89f3ab854cbc4d13d8d536bce427b2acd128cc08"
+  },
+  {
+   "id": "tabs-03",
+   "split": "published",
+   "api_area": "tabs",
+   "task": "Show a tabbed reading app whose tab bar adapts to a sidebar on iPad.",
+   "gate_symbols": [
+    "TabView",
+    "Tab",
+    "tabViewStyle"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "Tab",
+    "tabViewStyle"
+   ],
+   "task_sha256": "e052e1790d57b100d463f13d12976d87c53b2507b0d6e12d34c29b5d9e9e5a43"
+  },
+  {
+   "id": "focus-01",
+   "split": "published",
+   "api_area": "focus",
+   "task": "Show a login form where the password field takes focus after the user submits the email field.",
+   "gate_symbols": [
+    "FocusState",
+    "focused",
     "State"
    ],
    "stale_markers": [],
    "current_markers": [
-    "onChange"
+    "FocusState",
+    "focused"
    ],
-   "task_sha256": "8ccd65f8cca8d9ceaa7b60561d6726d3549863f60505ea8aed50ba894ff2feab"
+   "task_sha256": "bf0542322deb2ac571fe04d07f5a85d79a145c74954d9b35a6e233b36e41912a"
+  },
+  {
+   "id": "focus-02",
+   "split": "published",
+   "api_area": "focus",
+   "task": "Show a search screen whose text field is focused as soon as the screen appears.",
+   "gate_symbols": [
+    "FocusState",
+    "focused",
+    "State"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "FocusState",
+    "focused"
+   ],
+   "task_sha256": "2dffad73ea9bebe2ab6e695616e120dd731a1c1ca9a5835529c7529b7fba6bf7"
+  },
+  {
+   "id": "focus-03",
+   "split": "published",
+   "api_area": "focus",
+   "task": "Show a form with a Done button that dismisses the keyboard from whichever field is active.",
+   "gate_symbols": [
+    "FocusState",
+    "focused",
+    "State"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "FocusState",
+    "focused"
+   ],
+   "task_sha256": "b91c5b0b118b8f79ee16efc88503d44e0ce3e2b90ff79ad43ecab34ae004117b"
+  },
+  {
+   "id": "share-01",
+   "split": "published",
+   "api_area": "share",
+   "task": "Show an article screen with a share button in the navigation bar that offers the article's link.",
+   "gate_symbols": [
+    "ShareLink",
+    "toolbar",
+    "ToolbarItem"
+   ],
+   "stale_markers": [
+    "toolbar"
+   ],
+   "current_markers": [
+    "ShareLink",
+    "ToolbarItem"
+   ],
+   "task_sha256": "f2fe146d772e101f3ae23ced6a394a74d58fa3427a03a520ea3b09b6de76f02a"
+  },
+  {
+   "id": "share-02",
+   "split": "published",
+   "api_area": "share",
+   "task": "Show a photo detail screen with a share action offering the image itself.",
+   "gate_symbols": [
+    "ShareLink",
+    "toolbar",
+    "ToolbarItem"
+   ],
+   "stale_markers": [
+    "toolbar"
+   ],
+   "current_markers": [
+    "ShareLink",
+    "ToolbarItem"
+   ],
+   "task_sha256": "b3323023106d38f3d4da518a902d56d277feeb6b58ca4ee824a72331ea9cb73d"
+  },
+  {
+   "id": "share-03",
+   "split": "published",
+   "api_area": "share",
+   "task": "Show a document screen whose toolbar offers sharing a file with a preview thumbnail.",
+   "gate_symbols": [
+    "ShareLink",
+    "toolbar",
+    "ToolbarItem"
+   ],
+   "stale_markers": [
+    "toolbar"
+   ],
+   "current_markers": [
+    "ShareLink",
+    "ToolbarItem"
+   ],
+   "task_sha256": "7c6c3921057560e71391bb67280d4f8ccf2164c37d88032d27f3b125ae7b4964"
   }
  ]
 }
