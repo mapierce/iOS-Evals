@@ -1,0 +1,54 @@
+# Reproducibility contract. Every input that can move a score lives here.
+# A stranger with this file and the same Xcode reproduces the published table.
+
+[toolchain]
+# Build number, not marketing version — two Xcodes both called "26.6" can ship
+# different Swift compilers, and the compiler is our scorer.
+xcode_build      = "17F113"
+xcode_version    = "26.6"
+swift_version    = "6.3.3"
+
+[sdk]
+platform    = "iphoneos"
+sdk_version = "26.5"
+
+# SwiftUI is split across two frameworks as of SDK 26.x. Both must be parsed or
+# ground truth silently misses ~160 deprecated symbols (foregroundColor lives in
+# SwiftUICore, not SwiftUI).
+modules = ["SwiftUI", "SwiftUICore"]
+
+# Interface slice to parse. arm64e is the only iOS slice shipped in the SDK.
+interface_arch = "arm64e-apple-ios"
+
+[target]
+# The oldest iOS we promise to support — the FLOOR, not the ceiling.
+# This alone defines what counts as an availability violation.
+# Parameterised everywhere — never hardcode it.
+#
+# 17.0 sits three majors below the SDK ceiling (26.5), leaving ~1,225 SwiftUI
+# symbols above the line. Widest availability signal of the options considered
+# (18.0 gives ~715; 26.0 gives ~44 and collapses the metric).
+deployment_target = "17.0"
+
+[generation]
+temperature        = 0.2
+samples_per_prompt = 5
+
+[compile]
+# Cross-compile the scaffold to iOS. SwiftPM leaks the macOS sysroot to clang,
+# so -Xcc -isysroot is required in addition to -Xswiftc -sdk or the build fails
+# with "cannot load underlying module for 'UIKit'".
+arch = "arm64-apple-ios"
+
+# LOAD-BEARING. Apple marks most SwiftUI deprecations with the sentinel
+# `deprecated: 100000.0` ("soft-deprecated"), which the compiler deliberately
+# does NOT warn about — 270 of 326 deprecated symbols, including NavigationView,
+# foregroundColor and accessibility(label:). Without this flag the benchmark
+# silently observes only 47/326 = 14% of deprecations and every model looks
+# current. Verified against Swift 6.3.3; it is a hidden flag, so re-verify if
+# the toolchain pin moves.
+warn_soft_deprecated = true
+
+# Deprecation warnings carry this diagnostic group; availability failures are
+# hard errors. Both are captured from the build.
+deprecation_group = "DeprecatedDeclaration"

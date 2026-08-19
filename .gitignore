@@ -1,0 +1,9 @@
+# Held-out prompt split — never committed. Publishing it rots the benchmark.
+prompts.local/
+
+# Machine-generated ground truth. Always re-derived from the SDK on disk.
+build/
+*.pyc
+__pycache__/
+.venv/
+.DS_Store
