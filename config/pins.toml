@@ -25,9 +25,10 @@ interface_arch = "arm64e-apple-ios"
 # This alone defines what counts as an availability violation.
 # Parameterised everywhere — never hardcode it.
 #
-# 17.0 sits three majors below the SDK ceiling (26.5), leaving ~1,225 SwiftUI
+# 17.0 sits three majors below the SDK ceiling (26.5), leaving 2,279 SwiftUI
 # symbols above the line. Widest availability signal of the options considered
-# (18.0 gives ~715; 26.0 gives ~44 and collapses the metric).
+# (18.0 gives 839; 26.0 gives 26 and collapses the metric). Counts measured
+# against the ground truth artifact, not estimated.
 deployment_target = "17.0"
 
 [generation]

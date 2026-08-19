@@ -191,10 +191,40 @@ def _extract_attr_bodies(line: str) -> list[str]:
     return bodies
 
 
+def _strip_leading_attributes(text: str) -> str:
+    """Drop leading @attributes from a declaration line.
+
+    Most SwiftUI views declare as `@_Concurrency.MainActor @preconcurrency
+    public struct Foo`, so treating any line starting with "@" as
+    attribute-only silently discards the declaration itself.
+    """
+    s = text.strip()
+    while s.startswith("@"):
+        i = 1
+        while i < len(s) and (s[i].isalnum() or s[i] in "_."):
+            i += 1
+        if i < len(s) and s[i] == "(":           # attribute with arguments
+            depth = 0
+            while i < len(s):
+                if s[i] == "(":
+                    depth += 1
+                elif s[i] == ")":
+                    depth -= 1
+                    if depth == 0:
+                        i += 1
+                        break
+                i += 1
+        nxt = s[i:].lstrip()
+        if nxt == s:                              # no progress; avoid a spin
+            break
+        s = nxt
+    return s
+
+
 def _decl_from(line: str) -> tuple[str, str] | None:
     """Return (kind, name) for a declaration line, or None."""
-    stripped = line.strip()
-    if stripped.startswith("@") or stripped.startswith("//") or stripped.startswith("#"):
+    stripped = _strip_leading_attributes(line)
+    if not stripped or stripped.startswith("//") or stripped.startswith("#"):
         return None
 
     ext = _EXTENSION_RE.search(stripped)
