@@ -3,6 +3,9 @@ prompts.local/
 
 # Machine-generated ground truth. Always re-derived from the SDK on disk.
 build/
+
+# SwiftPM build products in the scaffold.
+.build/
 *.pyc
 __pycache__/
 .venv/
