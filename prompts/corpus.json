@@ -1,0 +1,200 @@
+{
+ "split": "published",
+ "count": 10,
+ "corpus_sha256": "99ef30e40f9afd9deab368f166f490a03e0457f2562c4e0316c979537ee500ed",
+ "prompts": [
+  {
+   "id": "nav-001",
+   "split": "published",
+   "api_area": "navigation",
+   "task": "Write a SwiftUI view for an iOS app showing a list of recipe names. Tapping a recipe opens a detail screen showing that recipe's name and ingredients.",
+   "gate_symbols": [
+    "NavigationView",
+    "NavigationStack",
+    "NavigationLink",
+    "navigationDestination",
+    "NavigationSplitView"
+   ],
+   "stale_markers": [
+    "NavigationView"
+   ],
+   "current_markers": [
+    "NavigationStack",
+    "navigationDestination"
+   ],
+   "task_sha256": "db057ce257f4f872fdeb676e9b291b5e095709ebdb7943da70c28f7837720917"
+  },
+  {
+   "id": "nav-002",
+   "split": "published",
+   "api_area": "navigation",
+   "task": "Write a SwiftUI screen with the heading 'Inbox' shown in the navigation bar, and a compose button in the top-right of that bar.",
+   "gate_symbols": [
+    "navigationBarTitle",
+    "navigationTitle",
+    "toolbar",
+    "ToolbarItem",
+    "NavigationView",
+    "NavigationStack"
+   ],
+   "stale_markers": [
+    "navigationBarTitle",
+    "NavigationView"
+   ],
+   "current_markers": [
+    "navigationTitle",
+    "ToolbarItem",
+    "NavigationStack"
+   ],
+   "task_sha256": "bfa1d0d5b60709a0405ddc85add310e0f88ef622c372482335aeed26bce89d9d"
+  },
+  {
+   "id": "style-001",
+   "split": "published",
+   "api_area": "styling",
+   "task": "Write a SwiftUI view showing a temperature reading where the number is tinted red when it is above 30 degrees and blue otherwise.",
+   "gate_symbols": [
+    "foregroundColor",
+    "foregroundStyle"
+   ],
+   "stale_markers": [
+    "foregroundColor"
+   ],
+   "current_markers": [
+    "foregroundStyle"
+   ],
+   "task_sha256": "363aeac19a74f495ae600afdd5c8898fe612a49ba2f1307b1dac652a2725f4f8"
+  },
+  {
+   "id": "a11y-001",
+   "split": "published",
+   "api_area": "accessibility",
+   "task": "Write a SwiftUI toolbar row of three icon-only buttons \u2014 share, favourite, delete \u2014 that a VoiceOver user can identify correctly.",
+   "gate_symbols": [
+    "accessibility",
+    "accessibilityLabel",
+    "accessibilityAddTraits"
+   ],
+   "stale_markers": [
+    "accessibility"
+   ],
+   "current_markers": [
+    "accessibilityLabel",
+    "accessibilityAddTraits"
+   ],
+   "task_sha256": "5bbb0934cba0c81440bdcb1ea02bab25c8ad47e08dacc45450d836ae963c98ed"
+  },
+  {
+   "id": "toolbar-001",
+   "split": "published",
+   "api_area": "toolbar",
+   "task": "Write a SwiftUI screen whose navigation bar has a solid dark background with light text, rather than the system default.",
+   "gate_symbols": [
+    "toolbar",
+    "toolbarBackground",
+    "toolbarColorScheme",
+    "ToolbarItem"
+   ],
+   "stale_markers": [
+    "toolbarBackground"
+   ],
+   "current_markers": [
+    "toolbarColorScheme",
+    "ToolbarItem"
+   ],
+   "task_sha256": "fcdfed5974db545c9a42359a483dd8331816ef57eecc46f65242336bbb12b8de"
+  },
+  {
+   "id": "scroll-001",
+   "split": "published",
+   "api_area": "scrolling",
+   "task": "Write a SwiftUI horizontal carousel of cards that comes to rest with one card centred, rather than stopping between cards.",
+   "gate_symbols": [
+    "ScrollView",
+    "scrollTargetBehavior",
+    "scrollTargetLayout",
+    "scrollPosition",
+    "LazyHStack"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "scrollTargetBehavior",
+    "scrollTargetLayout"
+   ],
+   "task_sha256": "12040ae64026bf28b991970866e15ddc885d3891c7a4627d537f2d2875dee4e5"
+  },
+  {
+   "id": "obs-001",
+   "split": "published",
+   "api_area": "observation",
+   "task": "Write a SwiftUI counter screen where the count lives in a separate model type, and the view updates whenever the model changes.",
+   "gate_symbols": [
+    "ObservedObject",
+    "StateObject",
+    "State",
+    "Bindable"
+   ],
+   "stale_markers": [
+    "ObservedObject"
+   ],
+   "current_markers": [
+    "State",
+    "Bindable"
+   ],
+   "task_sha256": "365549e5dbb45f9ad86ab8da99aee25666de998c372544137dac9dcad6802b1d"
+  },
+  {
+   "id": "sheet-001",
+   "split": "published",
+   "api_area": "presentation",
+   "task": "Write a SwiftUI view with a button that slides up a panel covering the bottom half of the screen, which the user can drag to full height.",
+   "gate_symbols": [
+    "sheet",
+    "presentationDetents",
+    "presentationDragIndicator"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "presentationDetents",
+    "presentationDragIndicator"
+   ],
+   "task_sha256": "ab88c4ba084bf195fa4a6b8351fd4a5cc8f7272bac18ad88de701217b395d8be"
+  },
+  {
+   "id": "list-001",
+   "split": "published",
+   "api_area": "list",
+   "task": "Write a SwiftUI list of tasks grouped under 'Today' and 'Later', where swiping a row sideways reveals a delete action.",
+   "gate_symbols": [
+    "List",
+    "ForEach",
+    "Section",
+    "swipeActions",
+    "listRowSeparator"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "swipeActions",
+    "Section"
+   ],
+   "task_sha256": "2036a48090458f03400691210552d7c955a35f8ef727378421ef27cb9735f613"
+  },
+  {
+   "id": "change-001",
+   "split": "published",
+   "api_area": "onchange",
+   "task": "Write a SwiftUI search field that runs a lookup whenever the text the user has typed changes.",
+   "gate_symbols": [
+    "onChange",
+    "task",
+    "onAppear",
+    "State"
+   ],
+   "stale_markers": [],
+   "current_markers": [
+    "onChange"
+   ],
+   "task_sha256": "8ccd65f8cca8d9ceaa7b60561d6726d3549863f60505ea8aed50ba894ff2feab"
+  }
+ ]
+}
