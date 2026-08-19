@@ -60,6 +60,17 @@ Violating any of these silently invalidates all results. Treat them as assertion
   any model output is inserted. Scaffold noise pollutes every score.
 - **Non-compiling output scores as failure and is retained.** Never discard failed samples
   from the denominator — that flatters bad models.
+- **Prompts are derived from ground truth, never from recall.** The `@available`
+  parse *is* the enumeration of what churns; triage that list down to symbols
+  that plausibly appear in ordinary tasks, then write prompts against it. Picking
+  API areas from memory yields a representative sample, not a complete one — it
+  surfaces the memorable deprecations and stops. Deriving from the SDK means the
+  corpus regenerates as the SDK moves, the same property that makes the scoring
+  trustworthy.
+- **Never publish a model ranking on a thin corpus.** Between-prompt variance
+  swamps between-model variance until the corpus covers the churning families
+  two to three prompts deep. Report per-family breakdowns rather than a single
+  aggregate: more useful to readers, and far harder to attack.
 - **The held-out split is never committed.** ~30% of prompts stay in a local-only file
   listed in `.gitignore`. Published prompts get trained on and the benchmark rots.
 - **Metrics are frozen before results are viewed.** Defined in `docs/metrics.md`, dated,
