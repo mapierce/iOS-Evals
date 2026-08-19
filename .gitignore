@@ -10,3 +10,7 @@ build/
 __pycache__/
 .venv/
 .DS_Store
+
+# API keys. Never committed — see .env.example for the required variables.
+.env
+.env.local
