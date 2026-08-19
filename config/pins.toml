@@ -82,7 +82,17 @@ roster = [
   "deepseek/deepseek-v4-pro",      # 1.44 /  2.88
   "moonshotai/kimi-k3",            # 3.00 / 15.00
   "z-ai/glm-5.3",                  # 1.40 /  4.40
+  "x-ai/grok-4.20",                # 1.25 /  2.50
+  "mistralai/mistral-large-2512",  # 0.50 /  1.50
+  "meta-llama/llama-4-maverick",   # 0.20 /  0.80
+  "qwen/qwen3-coder-plus",         # 0.65 /  3.25  — code-specialised pair, see below
+  "mistralai/codestral-2508",      # 0.30 /  0.90  — code-specialised pair, see below
 ]
+
+# Two code-specialised models sit alongside general-purpose siblings from the
+# same labs (qwen3.8-27b, mistral-large-2512). That pairing is deliberate: it
+# tests whether coding-tuned training makes a model more API-current, or just
+# more fluent in stale idioms. Read those four together, not in isolation.
 
 # gpt-5.6-luna-pro is priced ~12x below sol-pro and terra-pro despite the
 # shared "-pro" suffix. Treat it as a lower tier when reading results; the
@@ -93,4 +103,5 @@ roster = [
 # silently, which would violate the recorded-quantisation invariant. Generation
 # must disable fallbacks and record the serving provider on every sample.
 routing_sensitive = ["qwen/qwen3.8-27b", "deepseek/deepseek-v4-pro",
-                     "moonshotai/kimi-k3", "z-ai/glm-5.3"]
+                     "moonshotai/kimi-k3", "z-ai/glm-5.3",
+                     "meta-llama/llama-4-maverick"]
