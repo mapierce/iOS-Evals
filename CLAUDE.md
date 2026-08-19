@@ -84,13 +84,22 @@ defer it.
 
 Defined in `docs/metrics.md`. Summary:
 
-- `compile_rate` — share of samples that build.
-- `gated_rate` — share of samples that build **and** pass the functional gate.
-- `deprecations_per_sample` — mean count, gated samples only.
-- `availability_violations_per_sample` — mean count, gated samples only.
-- `currency_score` — current API calls / total relevant API calls, gated samples only.
+The functional gate is decoupled from compilation. It is an AST check over the
+generated source, and Swift's parser is lenient enough to parse code that does
+not typecheck, so a sample can be gated without building. This matters because
+availability violations are hard errors: tying the gate to a successful build
+would exclude exactly the samples the availability metric exists to count, and
+that metric could then only ever read zero.
 
-Report mean across k samples per prompt. Never report single-sample results.
+- `compile_rate` — share of gated samples that build. Reported separately.
+- `gated_rate` — share of samples that exercise the declared API area.
+- `deprecations_per_sample` — mean count, gated samples, building or not.
+- `availability_violations_per_sample` — mean count, gated samples, building or not.
+- `currency_score` — current API calls / total relevant API calls, gated samples.
+
+Deprecation warnings are emitted alongside errors, so failing builds still carry
+countable diagnostics. Report mean across k samples per prompt. Never report
+single-sample results.
 
 ## Configuration
 
@@ -120,7 +129,11 @@ results/         dated result tables
 
 ## Conventions
 
-- Python for tooling, Swift only inside the scaffold.
+- Python for tooling. Swift inside the scaffold, plus one small SwiftSyntax
+  helper tool that dumps a parsed AST as JSON. No Python library parses Swift,
+  and both the functional gate and availability attribution require real AST
+  inspection — the helper is the minimum Swift outside the scaffold that makes
+  those possible. Everything downstream of it stays Python.
 - Diagnostics are parsed as structured JSON from the build output. **No regex over
   human-readable compiler text.**
 - Any script that mutates `results/` writes a dated file; never overwrite prior runs.
