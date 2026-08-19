@@ -42,10 +42,6 @@ TASKS: list[tuple[str, str, str]] = [
  ("textinput","published","Show a username field that never autocorrects what the user types."),
  ("textinput","published","Show an email field with autocorrect off and no automatic capitalisation of the first letter."),
  ("textinput","published","Show a code-entry field that takes raw text with no autocorrection or capitalisation."),
- # dynamictype
- ("dynamictype","published","Show a card that switches from a side-by-side layout to a stacked one when the user has enlarged their text size."),
- ("dynamictype","published","Show a list row that hides its subtitle at the largest accessibility text sizes."),
- ("dynamictype","published","Show a button whose icon and label stack vertically once the user's text size passes the accessibility sizes."),
  # statusbar
  ("statusbar","published","Show a full-screen video player with the status bar hidden."),
  ("statusbar","published","Show an image gallery where the status bar hides once the user enters full-screen viewing."),
@@ -59,9 +55,9 @@ TASKS: list[tuple[str, str, str]] = [
  ("scrolling","published","Show a vertical feed with extra breathing room at the top and bottom of the scrollable content, without moving the scroll indicators."),
  ("scrolling","published","Show a chat transcript that opens scrolled to the most recent message at the bottom."),
  # presentation
- ("presentation","published","Show a button that slides up a panel covering the bottom half of the screen, draggable to full height."),
- ("presentation","published","Show a map with a panel resting near the bottom that can be dragged to a middle or full position, with the map still interactive behind it."),
- ("presentation","published","Show a filter panel that opens at a small fixed height with a visible drag handle."),
+ ("presentation","published","Show a button that brings up a card over the current screen, covering the bottom half with the screen behind dimmed and still visible. Dragging the card up expands it to full height; dragging it down dismisses it."),
+ ("presentation","published","Show a map screen where a card rises over the map at a third of the screen height. The user can drag it to a middle or full-height resting position, and the map stays visible and interactive behind it throughout."),
+ ("presentation","published","Show a filter card that comes up over the current screen at a fixed short height, with a grab handle at its top edge, and cannot be expanded beyond that height."),
  # onchange
  ("onchange","published","Show a search field that runs a lookup whenever the typed text changes."),
  ("onchange","published","Show a form that saves a draft whenever any of its fields change."),
@@ -71,9 +67,9 @@ TASKS: list[tuple[str, str, str]] = [
  ("list","published","Show a list of emails where swiping right marks as read and swiping left deletes."),
  ("list","published","Show a settings list of grouped sections with no separator lines between rows."),
  # layout
- ("layout","published","Show a specification table of label-and-value pairs aligned in two neat columns."),
- ("layout","published","Show a settings row with a title on the left and its current value right-aligned on the same line."),
- ("layout","published","Show a fitness ring showing progress toward a daily step goal as a proportion of the target."),
+ ("layout","published","Show a specification panel of eight label-and-value rows where every value starts at the same horizontal position, regardless of how long each label is, so the values form a straight column."),
+ ("layout","published","Show a settings panel of rows, each with a title on the left and its value on the right, where the values line up in a single column across all rows even though the titles differ in length."),
+ ("layout","published","Show a fitness summary where a daily step count is drawn as a filled arc indicating progress toward a goal, with the current and target values shown beneath it."),
  # gradient
  ("gradient","published","Show a card whose surface fades from orange at the top to pink at the bottom with white title text over it."),
  ("gradient","published","Show a header banner with a soft multi-colour wash behind the title, blending several colours across the area rather than a straight two-colour fade."),

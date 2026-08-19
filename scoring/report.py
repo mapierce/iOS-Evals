@@ -84,13 +84,26 @@ def render(report: dict, prompt_count: int) -> str:
     L.append("A single aggregate hides which areas a model is stale in. "
              "These breakdowns are the more useful and more defensible number.")
     L.append("")
+    L.append("**Read the gated column first.** A low value does not mean the model "
+             "failed — it means the model solved the task without touching the API "
+             "area under test, typically by hand-rolling the behaviour. That is a "
+             "finding in itself, but it also means the currency figure on that row "
+             "rests on very few samples and should not be compared across models.")
+    L.append("")
     areas: dict[str, dict[str, dict]] = {}
     for key, b in report["by_area"].items():
         model, area = key.split("|", 1)
         areas.setdefault(area, {})[model] = b
     for area in sorted(areas):
+        gates = [b["gated_rate"] for b in areas[area].values()]
+        mean_gate = sum(gates) / len(gates) if gates else 0.0
         L.append(f"### {area}")
         L.append("")
+        if mean_gate < 0.25:
+            L.append(f"> Mean gate rate {mean_gate:.2f} — models mostly solved these "
+                     "tasks without using the API area under test. Currency figures "
+                     "below rest on a small minority of samples.")
+            L.append("")
         L.append("| Model | Gated | Deprecations/sample | Currency |")
         L.append("|---|---:|---:|---:|")
         for model, b in sorted(areas[area].items(),

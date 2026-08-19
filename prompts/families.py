@@ -55,11 +55,10 @@ FAMILIES: dict[str, dict[str, list[str]]] = {
         "stale": ["disableAutocorrection"],
         "current": ["autocorrectionDisabled", "textInputAutocapitalization"],
     },
-    "dynamictype": {
-        "gate": ["sizeCategory", "ContentSizeCategory", "dynamicTypeSize", "DynamicTypeSize"],
-        "stale": ["sizeCategory", "ContentSizeCategory"],
-        "current": ["dynamicTypeSize", "DynamicTypeSize"],
-    },
+    # "dynamictype" removed for the same reason as "observation": the family is
+    # reached through @Environment(\.dynamicTypeSize), and the parse-only AST
+    # records property wrappers as nameless attribute nodes. Measured gate rate
+    # was 0.03 — models solved the tasks, the gate just could not see it.
     "statusbar": {
         "gate": ["statusBar", "statusBarHidden"],
         "stale": ["statusBar"],

@@ -1,10 +1,9 @@
 {
  "split": "published",
- "count": 63,
+ "count": 60,
  "families": [
   "accessibility",
   "colorscheme",
-  "dynamictype",
   "focus",
   "gestures",
   "glass",
@@ -24,7 +23,7 @@
   "textinput",
   "toolbar"
  ],
- "corpus_sha256": "a6759fce8987e7fa62919ecd19c97e96e55ee6f4c79454e54e1210e0ea14cab7",
+ "corpus_sha256": "3c4310c07c0188f60f67fceb5e87aecf19ba0d3f3681e044dbf3836957680a51",
  "prompts": [
   {
    "id": "navigation-01",
@@ -486,69 +485,6 @@
    "task_sha256": "f442383a706cdf342e56de782a56c7056356f958fdcce28a36e96dac7c666b8f"
   },
   {
-   "id": "dynamictype-01",
-   "split": "published",
-   "api_area": "dynamictype",
-   "task": "Show a card that switches from a side-by-side layout to a stacked one when the user has enlarged their text size.",
-   "gate_symbols": [
-    "sizeCategory",
-    "ContentSizeCategory",
-    "dynamicTypeSize",
-    "DynamicTypeSize"
-   ],
-   "stale_markers": [
-    "sizeCategory",
-    "ContentSizeCategory"
-   ],
-   "current_markers": [
-    "dynamicTypeSize",
-    "DynamicTypeSize"
-   ],
-   "task_sha256": "0364a5229c92015737b54e8e1fe3e157241d88345d9947ec064e13a3edcb483e"
-  },
-  {
-   "id": "dynamictype-02",
-   "split": "published",
-   "api_area": "dynamictype",
-   "task": "Show a list row that hides its subtitle at the largest accessibility text sizes.",
-   "gate_symbols": [
-    "sizeCategory",
-    "ContentSizeCategory",
-    "dynamicTypeSize",
-    "DynamicTypeSize"
-   ],
-   "stale_markers": [
-    "sizeCategory",
-    "ContentSizeCategory"
-   ],
-   "current_markers": [
-    "dynamicTypeSize",
-    "DynamicTypeSize"
-   ],
-   "task_sha256": "027ba41894abb79fe4e39cf0299b11a92fdbfcf5d08bd0817e8e946bf5f42fb1"
-  },
-  {
-   "id": "dynamictype-03",
-   "split": "published",
-   "api_area": "dynamictype",
-   "task": "Show a button whose icon and label stack vertically once the user's text size passes the accessibility sizes.",
-   "gate_symbols": [
-    "sizeCategory",
-    "ContentSizeCategory",
-    "dynamicTypeSize",
-    "DynamicTypeSize"
-   ],
-   "stale_markers": [
-    "sizeCategory",
-    "ContentSizeCategory"
-   ],
-   "current_markers": [
-    "dynamicTypeSize",
-    "DynamicTypeSize"
-   ],
-   "task_sha256": "f7796c38d5c3515c1c0ae68273b519c1e001337216e874507c45b207b564964f"
-  },
-  {
    "id": "statusbar-01",
    "split": "published",
    "api_area": "statusbar",
@@ -723,7 +659,7 @@
    "id": "presentation-01",
    "split": "published",
    "api_area": "presentation",
-   "task": "Show a button that slides up a panel covering the bottom half of the screen, draggable to full height.",
+   "task": "Show a button that brings up a card over the current screen, covering the bottom half with the screen behind dimmed and still visible. Dragging the card up expands it to full height; dragging it down dismisses it.",
    "gate_symbols": [
     "sheet",
     "presentationDetents",
@@ -737,13 +673,13 @@
     "presentationDragIndicator",
     "presentationBackground"
    ],
-   "task_sha256": "f117c8274aaccc23167d4a7ca5be1fe2753f10fee13e10b39750b6d4d216c7a3"
+   "task_sha256": "32e18ead0cfd291bd59aeb1fbb21576c967e22d2f7bb9269f721b1378fb76ea5"
   },
   {
    "id": "presentation-02",
    "split": "published",
    "api_area": "presentation",
-   "task": "Show a map with a panel resting near the bottom that can be dragged to a middle or full position, with the map still interactive behind it.",
+   "task": "Show a map screen where a card rises over the map at a third of the screen height. The user can drag it to a middle or full-height resting position, and the map stays visible and interactive behind it throughout.",
    "gate_symbols": [
     "sheet",
     "presentationDetents",
@@ -757,13 +693,13 @@
     "presentationDragIndicator",
     "presentationBackground"
    ],
-   "task_sha256": "0196fb2db84452131eb4f6131ec722ae2047d1999337f76f514cf87a522fa179"
+   "task_sha256": "c6bc7a242a0bd956fc0721caaa22dad6d5691639f662788952b53c18468cbcde"
   },
   {
    "id": "presentation-03",
    "split": "published",
    "api_area": "presentation",
-   "task": "Show a filter panel that opens at a small fixed height with a visible drag handle.",
+   "task": "Show a filter card that comes up over the current screen at a fixed short height, with a grab handle at its top edge, and cannot be expanded beyond that height.",
    "gate_symbols": [
     "sheet",
     "presentationDetents",
@@ -777,7 +713,7 @@
     "presentationDragIndicator",
     "presentationBackground"
    ],
-   "task_sha256": "add4d4ebb977797d82e8ea434eb402c88c2681c603931759b118a0b529e85fe9"
+   "task_sha256": "ebcc1d74c3785d41826a0cced2bcba7b1e15c0009dcfeaadeb011ae981019a73"
   },
   {
    "id": "onchange-01",
@@ -897,7 +833,7 @@
    "id": "layout-01",
    "split": "published",
    "api_area": "layout",
-   "task": "Show a specification table of label-and-value pairs aligned in two neat columns.",
+   "task": "Show a specification panel of eight label-and-value rows where every value starts at the same horizontal position, regardless of how long each label is, so the values form a straight column.",
    "gate_symbols": [
     "Grid",
     "GridRow",
@@ -912,13 +848,13 @@
     "LabeledContent",
     "Gauge"
    ],
-   "task_sha256": "6532952b7b923bf4cf2d4ceb8c16ffc9b6f5d649f427be60323b127fb1e393f0"
+   "task_sha256": "92c676eb09cbf57e0f1b523215370ed9cb8c2cd56de362f23ed8e8c6efa7fc8c"
   },
   {
    "id": "layout-02",
    "split": "published",
    "api_area": "layout",
-   "task": "Show a settings row with a title on the left and its current value right-aligned on the same line.",
+   "task": "Show a settings panel of rows, each with a title on the left and its value on the right, where the values line up in a single column across all rows even though the titles differ in length.",
    "gate_symbols": [
     "Grid",
     "GridRow",
@@ -933,13 +869,13 @@
     "LabeledContent",
     "Gauge"
    ],
-   "task_sha256": "ea8921617f88eca3c2c918ac277d122c93fef659bedb7cacb8fe7bf11d8c8432"
+   "task_sha256": "e1f258348c50b1e150228625e51d0b9d0c63db334246200846657a9ee21982f8"
   },
   {
    "id": "layout-03",
    "split": "published",
    "api_area": "layout",
-   "task": "Show a fitness ring showing progress toward a daily step goal as a proportion of the target.",
+   "task": "Show a fitness summary where a daily step count is drawn as a filled arc indicating progress toward a goal, with the current and target values shown beneath it.",
    "gate_symbols": [
     "Grid",
     "GridRow",
@@ -954,7 +890,7 @@
     "LabeledContent",
     "Gauge"
    ],
-   "task_sha256": "9664074b99b30364ac8b92aa244634cbcc2186b05ae8182d73dba61374611e04"
+   "task_sha256": "b7a05f942b3609634a44362910ab71b45d7e1cd5921e10e619d8b1a3e51da040"
   },
   {
    "id": "gradient-01",
