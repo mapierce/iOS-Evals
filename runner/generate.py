@@ -69,6 +69,9 @@ class Sample:
     finish_reason: str | None
     usage: dict
     generated_at: str
+    # Ceiling actually used. Recorded per sample so a run is auditable even
+    # when the ceiling was raised on retry.
+    max_tokens: int = 0
     # Output stopped at max_tokens. Partial Swift will not compile, so this
     # must be visible in results rather than charged to the model as staleness.
     truncated: bool = False
@@ -159,23 +162,36 @@ def generate_one(pins: dict, key: str, prompt: dict, model: str, index: int) -> 
         return path
 
     temperature = float(pins["generation"]["temperature"])
-    max_tokens = int(pins["generation"].get("max_tokens", 12000))
+    max_tokens = int(pins["generation"].get("max_tokens", 16000))
+    ceiling_cap = int(pins["generation"].get("max_tokens_ceiling", 32000))
     seed = index  # deterministic per sample where the provider honours it
     pin_provider = model in pins["models"].get("routing_sensitive", [])
 
     try:
+        # A truncated sample may be the harness's ceiling rather than the
+        # model's limit. Retry once with double the room: if it completes, the
+        # ceiling was ours; if it truncates again, that is the model's
+        # behaviour and is recorded as such. Only truncating samples pay for
+        # the retry, and the ceiling used is written to the sample.
+        used = max_tokens
         payload = call_gateway(pins, key, model, prompt["task"],
-                               temperature, seed, pin_provider, max_tokens)
+                               temperature, seed, pin_provider, used)
         choice = (payload.get("choices") or [{}])[0]
         raw = (choice.get("message") or {}).get("content") or ""
         finish = choice.get("finish_reason")
+        if finish == "length" and used < ceiling_cap:
+            used = min(used * 2, ceiling_cap)
+            payload = call_gateway(pins, key, model, prompt["task"],
+                                   temperature, seed, pin_provider, used)
+            choice = (payload.get("choices") or [{}])[0]
+            raw = (choice.get("message") or {}).get("content") or ""
+            finish = choice.get("finish_reason")
         if finish == "length" and not raw.strip():
-            # Whole budget consumed before any output — on thinking models this
-            # means max_tokens is too low, not that the model failed the task.
             raise GenerationError(
-                f"truncated before any output (finish_reason=length, "
-                f"{(payload.get('usage') or {}).get('completion_tokens')} tokens): "
-                f"raise generation.max_tokens")
+                f"truncated before any output at max_tokens={used} "
+                f"({(payload.get('usage') or {}).get('completion_tokens')} tokens "
+                f"consumed); this is the model exhausting a doubled ceiling, "
+                f"not the harness cutting it short")
         sample = Sample(
             prompt_id=prompt["id"], split=prompt["split"], api_area=prompt["api_area"],
             model=model, sample_index=index, temperature=temperature, seed=seed,
@@ -186,6 +202,7 @@ def generate_one(pins: dict, key: str, prompt: dict, model: str, index: int) -> 
             usage=payload.get("usage") or {},
             generated_at=datetime.now(timezone.utc).isoformat(),
             truncated=(finish == "length"),
+            max_tokens=used,
         )
     except GenerationError as exc:
         # Retained, not discarded. A model that cannot produce output scores as
@@ -223,7 +240,17 @@ def main() -> int:
     k = args.limit or int(pins["generation"]["samples_per_prompt"])
     workers = args.workers or int(pins["generation"].get("workers", 4))
 
-    jobs = [(p, m, i) for m in models for p in corpus for i in range(k)]
+    # Interleave across models rather than grouping by model. Grouped, every
+    # worker hits one provider at once and throughput collapses to that
+    # provider's rate limit while the rest idle; interleaved, concurrent
+    # requests land on different providers.
+    per_model = [[(p, m, i) for p in corpus for i in range(k)] for m in models]
+    jobs = [job for row in zip(*per_model) for job in row]
+    longest = max((len(x) for x in per_model), default=0)
+    for col in range(len(jobs) // max(len(models), 1), longest):
+        for row in per_model:
+            if col < len(row):
+                jobs.append(row[col])
     todo = [j for j in jobs if not sample_path(j[1], j[0]["id"], j[2]).is_file()]
     print(f"models {len(models)}  prompts {len(corpus)}  k {k}")
     print(f"samples {len(jobs)} total, {len(jobs) - len(todo)} already on disk, {len(todo)} to generate")

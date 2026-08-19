@@ -53,6 +53,13 @@ workers = 4
 # charged to the model rather than to the harness. Samples that stop on
 # finish_reason=length are now flagged `truncated` and reported, so a run can
 # never silently attribute our ceiling to a model's currency.
+#
+# A sample that still truncates is retried ONCE at double the ceiling, capped
+# here. That separates the two cases automatically: completing on retry means
+# the ceiling was ours, truncating again at 32000 is the model's own behaviour
+# and is recorded as a genuine failure. Only truncating samples pay for a
+# retry, and each sample records the ceiling it actually used.
+max_tokens_ceiling = 32000
 
 [compile]
 # Cross-compile the scaffold to iOS. SwiftPM leaks the macOS sysroot to clang,
