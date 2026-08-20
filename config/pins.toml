@@ -121,7 +121,25 @@ roster = [
   "meta-llama/llama-4-maverick",   # 0.20 /  0.80
   "qwen/qwen3-coder-plus",         # 0.65 /  3.25  — code-specialised pair, see below
   "mistralai/codestral-2508",      # 0.30 /  0.90  — code-specialised pair, see below
+  "deepseek/deepseek-v4-flash-0731",  # 0.14 / 0.28
+  "tencent/hy3",                      # 0.13 / 0.53
+  "xiaomi/mimo-v2.5",                 # 0.14 / 0.28  — tier pair, see below
+  "xiaomi/mimo-v2.5-pro",             # 0.43 / 0.87  — tier pair, see below
 ]
+
+# The four above were added because they rank highly in the gateway's
+# programming category. That ranking measures USAGE POPULARITY, not
+# correctness or API currency, so the roster carries a mild bias toward
+# models people already reach for. Worth stating alongside any published
+# result. It also sharpens the coding-model question: if models chosen FOR
+# programming score low on currency, that strengthens the qwen finding.
+#
+# A dated snapshot was taken for DeepSeek Flash (-0731) rather than the
+# undated deepseek-v4-flash, which is priced differently and may point at a
+# moving target. deepseek-v4-flash-0423 does not exist on the gateway.
+#
+# mimo-v2.5 and mimo-v2.5-pro are a tier pair, like the qwen general/coder
+# pair — read them together.
 
 # Two code-specialised models sit alongside general-purpose siblings from the
 # same labs (qwen3.8-27b, mistral-large-2512). That pairing is deliberate: it
@@ -138,4 +156,6 @@ roster = [
 # must disable fallbacks and record the serving provider on every sample.
 routing_sensitive = ["qwen/qwen3.8-27b", "deepseek/deepseek-v4-pro",
                      "moonshotai/kimi-k3", "z-ai/glm-5.3",
-                     "meta-llama/llama-4-maverick"]
+                     "meta-llama/llama-4-maverick",
+                     "deepseek/deepseek-v4-flash-0731", "tencent/hy3",
+                     "xiaomi/mimo-v2.5", "xiaomi/mimo-v2.5-pro"]
