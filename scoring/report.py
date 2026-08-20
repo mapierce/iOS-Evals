@@ -66,8 +66,16 @@ def render(report: dict, prompt_count: int) -> str:
 
     L.append("## Per model")
     L.append("")
-    L.append("| Model | Gated | Compiles | Deprecations/sample | Availability/sample | Currency | Truncated |")
-    L.append("|---|---:|---:|---:|---:|---:|---:|")
+    L.append("> [!IMPORTANT]")
+    L.append("> **Currency is a rate, not a verdict.** It is scale-invariant: a verbose "
+             "model that is proportionally just as wrong scores the same as a concise one "
+             "that is wrong far less often. Read it next to *stale calls/sample*, which is "
+             "how much there actually is to fix in a file. Rows are ordered by currency for "
+             "readability only — see the confidence intervals below before reading order as "
+             "ranking.")
+    L.append("")
+    L.append("| Model | Gated | Compiles | Depr/sample | Avail/sample | Relevant/sample | Stale/sample | Currency | Truncated |")
+    L.append("|---|---:|---:|---:|---:|---:|---:|---:|---:|")
     rows = sorted(report["models"].items(),
                   key=lambda kv: (kv[1]["currency_score"] is None,
                                   -(kv[1]["currency_score"] or 0)))
@@ -75,9 +83,40 @@ def render(report: dict, prompt_count: int) -> str:
         L.append(
             f"| `{model}` | {b['gated_rate']:.2f} | {fmt(b['compile_rate'])} | "
             f"{fmt(b['deprecations_per_sample'])} | {fmt(b['availability_violations_per_sample'])} | "
+            f"{fmt(b.get('relevant_calls_per_sample'), '{:.1f}')} | "
+            f"{fmt(b.get('stale_calls_per_sample'), '{:.2f}')} | "
             f"{fmt(b['currency_score'], '{:.3f}')} | {b.get('truncated_rate', 0):.2f} |"
         )
     L.append("")
+
+    # Confidence intervals, and which adjacent pairs are actually separated.
+    cis = [(m, b["currency_score"], b.get("currency_ci")) for m, b in rows
+           if b.get("currency_ci") and b["currency_score"] is not None]
+    if cis:
+        L.append("### Is the order meaningful?")
+        L.append("")
+        L.append("95% confidence intervals, bootstrapped over **prompts** rather than "
+                 "samples: k draws of one prompt at a fixed temperature are highly "
+                 "correlated, so resampling samples would understate uncertainty.")
+        L.append("")
+        L.append("| Model | Currency | 95% CI | Prompts |")
+        L.append("|---|---:|---|---:|")
+        for m, c, (lo, hi, n) in cis:
+            L.append(f"| `{m}` | {c:.3f} | [{lo:.3f}, {hi:.3f}] | {n} |")
+        L.append("")
+        overlaps = []
+        for i in range(len(cis) - 1):
+            (ma, _, (loa, _, _)), (mb, _, (_, hib, _)) = cis[i], cis[i + 1]
+            overlaps.append((ma, mb, loa <= hib))
+        n_over = sum(1 for *_, o in overlaps if o)
+        L.append(f"**{n_over} of {len(overlaps)} adjacent pairs have overlapping intervals** "
+                 "and are not distinguishable at this sample size. Treat the table as tiers, "
+                 "not a leaderboard:")
+        L.append("")
+        for ma, mb, o in overlaps:
+            mark = "overlap — not distinguishable" if o else "**separated**"
+            L.append(f"- `{ma.split('/')[-1]}` vs `{mb.split('/')[-1]}` — {mark}")
+        L.append("")
 
     L.append("## Per API area")
     L.append("")
@@ -114,6 +153,35 @@ def render(report: dict, prompt_count: int) -> str:
                      f"{fmt(b['currency_score'], '{:.3f}')} |")
         L.append("")
 
+    L.append("## Threats to validity")
+    L.append("")
+    L.append("Known ways these numbers could mislead, stated so a reader does not have to "
+             "find them independently.")
+    L.append("")
+    L.append("- **Currency rewards verbosity.** It is a ratio over all SwiftUI symbols a "
+             "model wrote, and most of those (`Text`, `VStack`, `Spacer`) can never be "
+             "stale. A model that writes more boilerplate dilutes its own mistakes. Compare "
+             "*stale calls/sample* to see the absolute burden.")
+    L.append("- **The gate selects the sample.** Only samples exercising the API area are "
+             "scored. If a model hand-rolls when unsure and uses the platform API when "
+             "confident, its currency is computed on its confident cases and is optimistic. "
+             "A low gate rate makes this worse — read the gated column alongside every "
+             "score.")
+    L.append("- **Samples within a prompt are correlated.** Five draws at temperature 0.2 "
+             "on one task are not five independent observations, which is why the intervals "
+             "above resample prompts rather than samples.")
+    L.append("- **Ground truth covers SwiftUI and SwiftUICore only.** UIKit interop, "
+             "Combine, Observation and Charts calls are invisible, so a model leaning on "
+             "them is measured on less of its output.")
+    L.append("- **Property wrappers are invisible.** `@State`, `@StateObject`, `@Bindable` "
+             "and protocol conformances do not appear in the parse-only AST, so they are "
+             "never counted. Two API families were dropped for this reason.")
+    L.append("- **Occurrences, not decisions.** Using one deprecated symbol five times "
+             "counts five times. That reflects remediation effort, not five separate bad "
+             "choices.")
+    L.append("- **One SDK, one deployment target.** Valid only at the pins above. A model "
+             "scoring well at iOS 17.0 is not thereby current at any other target.")
+    L.append("")
     L.append("## Method")
     L.append("")
     L.append("Metrics are defined in [`docs/metrics.md`](../docs/metrics.md), frozen before "

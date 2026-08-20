@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import concurrent.futures as futures
 import json
+import random
 import shutil
 import statistics
 from collections import defaultdict
@@ -141,6 +142,35 @@ def score_sample(rec: dict, prompt: dict, gt: GroundTruth) -> Scored:
                   truncated=bool(rec.get("truncated")))
 
 
+def bootstrap_ci(rows: list[Scored], iters: int = 2000, seed: int = 0) -> tuple | None:
+    """95% CI for currency, resampling PROMPTS rather than samples.
+
+    Samples from the same prompt are not independent — k draws at a fixed
+    temperature on one task are highly correlated — so resampling samples
+    would understate uncertainty. The prompt is the independent unit.
+
+    This describes the uncertainty of an existing frozen metric. It does not
+    redefine one.
+    """
+    per: dict[str, list[int]] = {}
+    for r in rows:
+        if not r.gated or not r.relevant_calls:
+            continue
+        acc = per.setdefault(r.prompt_id, [0, 0])
+        acc[0] += r.current_calls
+        acc[1] += r.relevant_calls
+    vals = [(c, t) for c, t in per.values() if t]
+    if len(vals) < 5:
+        return None
+    rng = random.Random(seed)
+    boots = []
+    for _ in range(iters):
+        smp = [rng.choice(vals) for _ in vals]
+        boots.append(sum(c for c, _ in smp) / sum(t for _, t in smp))
+    boots.sort()
+    return (boots[int(0.025 * iters)], boots[int(0.975 * iters)], len(vals))
+
+
 def aggregate(scored: list[Scored]) -> dict:
     """Metrics per model, then per (model, api_area). Definitions: docs/metrics.md."""
     def block(rows: list[Scored]) -> dict:
@@ -158,6 +188,13 @@ def aggregate(scored: list[Scored]) -> dict:
             # Share of samples cut off at max_tokens. A high value means the
             # output ceiling, not the model, is shaping compile_rate.
             "truncated_rate": round(sum(r.truncated for r in rows) / len(rows), 4) if rows else 0.0,
+            # Absolute burden alongside the rate. Currency is scale-invariant,
+            # so a verbose model that is proportionally just as wrong scores
+            # the same as a concise one that is wrong far less often. These say
+            # how much there actually is to fix per file.
+            "relevant_calls_per_sample": round(sum(r.relevant_calls for r in gated) / len(gated), 2) if gated else None,
+            "stale_calls_per_sample": round(sum(r.relevant_calls - r.current_calls for r in gated) / len(gated), 2) if gated else None,
+            "currency_ci": bootstrap_ci(rows),
         }
 
     by_model: dict[str, list[Scored]] = defaultdict(list)
