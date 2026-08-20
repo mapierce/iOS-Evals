@@ -85,8 +85,10 @@ def submit(args) -> int:
         for chunk_no in range(0, len(pending), MAX_PER_BATCH):
             chunk = pending[chunk_no:chunk_no + MAX_PER_BATCH]
             reqs = [json.dumps({
-                # custom_id maps the result back to a sample slot.
-                "custom_id": f"{p['id']}|{i}",
+                # Maps the result back to a sample slot. The gateway restricts
+                # custom_id to [A-Za-z0-9_-], and prompt ids already contain a
+                # hyphen, so a double underscore is the separator.
+                "custom_id": f"{p['id']}__{i}",
                 "body": {
                     "messages": [{"role": "system", "content": SYSTEM},
                                  {"role": "user", "content": p["task"]}],
@@ -160,9 +162,11 @@ def collect(args) -> int:
 
         for item in results:
             cid = item.get("custom_id") or ""
-            if "|" not in cid:
+            if "__" not in cid:
                 continue
-            pid, idx = cid.rsplit("|", 1)
+            pid, idx = cid.rsplit("__", 1)
+            if not idx.isdigit():
+                continue
             prompt = prompts.get(pid)
             if prompt is None:
                 continue
