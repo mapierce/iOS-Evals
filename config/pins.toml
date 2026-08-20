@@ -46,7 +46,15 @@ max_tokens = 16000
 
 # Gateway concurrency. New accounts carry low per-model RPM limits; 12 workers
 # tripped 429s on claude-opus-5 within a minute. Retries honour Retry-After.
-workers = 4
+#
+# 28 is right for a MIXED roster, not 4. Two throughput bugs surfaced only at
+# full scale. Jobs were originally ordered by model, so every worker hammered
+# one provider's rate limit while the others idled — now interleaved. And a few
+# models (glm-5.3, qwen3.8-27b) generate up to 16k tokens then retry at 32k,
+# occupying a worker for minutes; with a small pool they starved everything
+# else. Measured: 1 sample/min at 10 workers, 9/min at 28. Lower this only when
+# running a single model, where one provider's limit is the real constraint.
+workers = 28
 
 # Raised from 12000 after a shakedown found kimi-k3 hitting the ceiling exactly
 # and returning PARTIAL Swift — which compiles as a failure and would have been
